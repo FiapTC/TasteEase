@@ -14,4 +14,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fiap.TasteEase.Infra\Fiap.TasteEase.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
