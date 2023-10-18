@@ -23,4 +23,5 @@
     <ProjectReference Include="..\..\Core\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
   </ItemGroup>
 
+
 </Project>

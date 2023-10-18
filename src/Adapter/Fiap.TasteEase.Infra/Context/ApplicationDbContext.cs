@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Fiap.TasteEase.Infra.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fiap.TasteEase.Infra.Context
 {
@@ -6,52 +8,30 @@ namespace Fiap.TasteEase.Infra.Context
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
+        public DbSet<OrderModel> Orders { get; set; } = null!;
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            foreach (var property in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetProperties()
-                    .Where(p => p.ClrType == typeof(string))))
-            {
-                if (property.GetColumnType() == null)
-                {
-                    property.SetColumnType("varchar(250)");
-                }
-            }
-
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
+            modelBuilder
+                .Entity<OrderModel>()
+                .Property(e => e.Status)
+                .HasConversion(new EnumToStringConverter<OrderStatusModel>());
+            
             base.OnModelCreating(modelBuilder);
         }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        
+        protected sealed override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
-            foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DateRegister") != null))
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Property("DateRegister").CurrentValue = DateTime.Now;
-                }
-
-                if (entry.State == EntityState.Modified)
-                {
-                    entry.Property("DateRegister").IsModified = false;
-                }
-            }
-
-            foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DateUpdate") != null))
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Property("DateUpdate").IsModified = false;
-                }
-
-                if (entry.State == EntityState.Modified)
-                {
-                    entry.Property("DateUpdate").CurrentValue = DateTime.Now;
-                }
-            }
-
-            return base.SaveChangesAsync(cancellationToken);
+            configurationBuilder.Properties<DateTime>()
+                .HaveConversion(typeof(DateTimeToDateTimeUtc));
         }
+    }
+
+    public class DateTimeToDateTimeUtc : ValueConverter<DateTime, DateTime>
+    {
+        public DateTimeToDateTimeUtc() : 
+            base(c => DateTime.SpecifyKind(c, DateTimeKind.Unspecified), c => c) { }
     }
 }
