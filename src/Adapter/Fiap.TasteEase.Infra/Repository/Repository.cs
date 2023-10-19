@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Fiap.TasteEase.Infra.Repository
 {
-    public abstract class Repository<TEntity> : IRepository<TEntity>  where TEntity : Entity  
+    public abstract class Repository<TEntity> : IRepository<TEntity>  where TEntity : Base  
     {
         protected readonly ApplicationDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
