@@ -1,12 +1,15 @@
-﻿using Fiap.TasteEase.Domain.Entities;
-using Fiap.TasteEase.Domain.Repositories;
-using Fiap.TasteEase.Infra.Context;
+﻿using Fiap.TasteEase.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Fiap.TasteEase.Application.Ports;
+using Fiap.TasteEase.Domain.Aggregates.Common;
 
 namespace Fiap.TasteEase.Infra.Repository
 {
-    public abstract class Repository<TEntity> : IRepository<TEntity>  where TEntity : Entity  
+    public abstract class Repository<TEntity, TKey, TProps> 
+        : IRepository<TEntity> 
+        where TEntity : Entity<TKey, TProps>
+        where TKey : class
     {
         protected readonly ApplicationDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
