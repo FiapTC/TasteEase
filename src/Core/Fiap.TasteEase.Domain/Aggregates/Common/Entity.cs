@@ -1,6 +1,11 @@
 ﻿namespace Fiap.TasteEase.Domain.Aggregates.Common;
 
-public class Entity<TKey, TProps> where TKey : class
+public record Key(Guid Value);
+public record Props();
+
+public class Entity<TKey, TProps> 
+    where TKey : Key 
+    where TProps : Props
 {
     public Entity(TProps props, TKey? id)
     {

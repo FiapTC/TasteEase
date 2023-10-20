@@ -1,24 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using Fiap.TasteEase.Application.Ports;
+using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 
 namespace Fiap.TasteEase.Infra.Models;
 
 [Table("order", Schema = "taste_ease")]
-public class OrderModel
+public class OrderModel : Model
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("id")]
-    public int Id { get; set; }
-
+    public Guid Id { get; set; }
+    
     [Column("description")]
     [MaxLength(512)]
     public string? Description { get; set; }
 
     [Column("status")]
     [MaxLength(128)]
-    public OrderStatusModel Status { get; set; }
+    public OrderStatus Status { get; set; }
 
     [Column("created_at", TypeName = "timestamp without time zone")]
     public DateTime CreatedAt { get; set; }

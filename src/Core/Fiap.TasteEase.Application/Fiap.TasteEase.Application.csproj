@@ -18,4 +18,8 @@
     <None Remove="Repositories\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

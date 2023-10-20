@@ -1,3 +1,5 @@
+using Fiap.TasteEase.Application.Ports;
+using Fiap.TasteEase.Domain.Aggregates.OrderAggregate;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.TasteEase.Api.Controllers
@@ -12,22 +14,22 @@ namespace Fiap.TasteEase.Api.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IOrderRepository _orderRepository;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            IOrderRepository orderRepository
+        )
         {
             _logger = logger;
+            _orderRepository = orderRepository;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public async Task<IEnumerable<Order>> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var teste = await _orderRepository.GetAll();
+            return teste.ValueOrDefault;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Fiap.TasteEase.Domain.Aggregates.Common;
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
+using Fiap.TasteEase.Domain.Ports;
 using FluentResults;
 
 namespace Fiap.TasteEase.Domain.Aggregates.OrderAggregate;
@@ -34,6 +35,24 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     public static Result<Order> Rehydrate(OrderProps props, OrderId id)
         => Result.Ok(new Order(props, id));
 
+    public static Result<Order> Rehydrate(IModel model)
+    {
+        var orderModel = model as IOrderModel;
+        var order = new Order(
+            new OrderProps(
+                orderModel.Description,
+                orderModel.Status,
+                orderModel.CreatedAt,
+                orderModel.CreatedBy,
+                orderModel.UpdatedAt,
+                orderModel.UpdatedBy
+            ), 
+            new OrderId(orderModel.Id)
+        );
+        
+        return Result.Ok(order);
+    }
+
     public Result<Order> UpdateStatus(OrderStatus newStatus)
     {
         Props = Props with { 
@@ -52,4 +71,15 @@ public record OrderProps(
     string CreatedBy,
     DateTime UpdatedAt,
     string UpdatedBy
-);
+) : Props;
+
+public class OrderModelTeste
+{
+    public Guid Id { get; set; }
+    public string? Description { get; set; }
+    public OrderStatus Status { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public string CreatedBy { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    public string UpdatedBy { get; set; }
+}

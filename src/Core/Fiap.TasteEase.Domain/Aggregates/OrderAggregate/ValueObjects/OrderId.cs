@@ -1,3 +1,5 @@
-﻿namespace Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
+﻿using Fiap.TasteEase.Domain.Aggregates.Common;
 
-public record OrderId(Guid Value);
+namespace Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
+
+public record OrderId(Guid Value) : Key(Value);

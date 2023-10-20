@@ -1,4 +1,5 @@
-﻿using Fiap.TasteEase.Infra.Models;
+﻿using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
+using Fiap.TasteEase.Infra.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -17,7 +18,7 @@ namespace Fiap.TasteEase.Infra.Context
             modelBuilder
                 .Entity<OrderModel>()
                 .Property(e => e.Status)
-                .HasConversion(new EnumToStringConverter<OrderStatusModel>());
+                .HasConversion(new EnumToStringConverter<OrderStatus>());
             
             base.OnModelCreating(modelBuilder);
         }
