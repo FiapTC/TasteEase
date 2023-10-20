@@ -2,6 +2,7 @@
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 using Fiap.TasteEase.Domain.Ports;
 using FluentResults;
+using Newtonsoft.Json;
 
 namespace Fiap.TasteEase.Domain.Aggregates.OrderAggregate;
 
@@ -37,17 +38,25 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
 
     public static Result<Order> Rehydrate(IModel model)
     {
-        var orderModel = model as IOrderModel;
+
+        //TODO: Usar reflection ou converter para json 
+
+        var description = model.GetType().GetProperty(nameof(IOrderModel.Description)).GetValue(model, null);
+
+        IOrderModel modelFromJson = JsonConvert.DeserializeObject<OrderModelTeste>(JsonConvert.SerializeObject(model)); ;
+
+        //var orderModel = model as IOrderModel;
+
         var order = new Order(
             new OrderProps(
-                orderModel.Description,
-                orderModel.Status,
-                orderModel.CreatedAt,
-                orderModel.CreatedBy,
-                orderModel.UpdatedAt,
-                orderModel.UpdatedBy
+                modelFromJson.Description,
+                modelFromJson.Status,
+                modelFromJson.CreatedAt,
+                modelFromJson.CreatedBy,
+                modelFromJson.UpdatedAt,
+                modelFromJson.UpdatedBy
             ), 
-            new OrderId(orderModel.Id)
+            new OrderId(modelFromJson.Id)
         );
         
         return Result.Ok(order);
@@ -73,7 +82,7 @@ public record OrderProps(
     string UpdatedBy
 ) : Props;
 
-public class OrderModelTeste
+public class OrderModelTeste : IOrderModel
 {
     public Guid Id { get; set; }
     public string? Description { get; set; }
