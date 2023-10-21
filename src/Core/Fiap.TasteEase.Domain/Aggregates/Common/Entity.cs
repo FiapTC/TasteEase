@@ -1,15 +1,10 @@
 ﻿namespace Fiap.TasteEase.Domain.Aggregates.Common;
 
-public record Key(Guid Value);
-public record Props();
-
-public class Entity<TKey, TProps> 
-    where TKey : Key 
-    where TProps : Props
+public class Entity<TKey, TProps>
 {
     public Entity(TProps props, TKey? id)
     {
-        _id = id == default(TKey) ? default : id;
+        _id = Equals(id, default(TKey)) ? default : id;
         _domainEvents = new();
         Props = props;
     }
@@ -40,7 +35,7 @@ public class Entity<TKey, TProps>
 
     protected bool IsTransient()
     {
-        return this._id == default(TKey);
+        return Equals(this._id, default(TKey));
     }
 
     public override bool Equals(object obj)
@@ -59,7 +54,7 @@ public class Entity<TKey, TProps>
         if (item.IsTransient() || this.IsTransient())
             return false;
         else
-            return item._id == this._id;
+            return Equals(item._id, this._id);
     }
 
     public override int GetHashCode()

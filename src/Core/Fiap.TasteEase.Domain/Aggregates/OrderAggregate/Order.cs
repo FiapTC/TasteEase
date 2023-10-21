@@ -20,15 +20,12 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     {
         var date = DateTime.UtcNow;
         var order = new Order(
-            new OrderProps(
-            props.Description,
-            props.Status,
-            date,
-            props.CreatedBy,
-            date,
-            props.UpdatedBy
-        ));
-
+            props with
+            {
+                CreatedAt = date, 
+                UpdatedAt = date
+            }
+        );
         return Result.Ok(order);
     }
 
@@ -70,15 +67,4 @@ public record OrderProps(
     string CreatedBy,
     DateTime UpdatedAt,
     string UpdatedBy
-) : Props;
-
-public class OrderModelTeste
-{
-    public Guid Id { get; set; }
-    public string? Description { get; set; }
-    public OrderStatus Status { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public string CreatedBy { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public string UpdatedBy { get; set; }
-}
+);

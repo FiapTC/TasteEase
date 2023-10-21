@@ -8,9 +8,7 @@ namespace Fiap.TasteEase.Application.Ports
     public interface IRepository<TEntity, TAggregate, TKey, TProps, TModel> 
         where TEntity : IModel
         where TAggregate : IAggregateRoot<TAggregate, TKey, TProps, TModel>
-        where TKey : Key 
-        where TProps : Props
-        where TModel : IModel
+        where TModel: IModel
     {
         // Task Add(TEntity entity);
         // Task<TEntity> GetById(Guid id);

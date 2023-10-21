@@ -11,8 +11,6 @@ namespace Fiap.TasteEase.Infra.Repository
         : IRepository<TEntity, TAggregate, TKey, TProps, TModel> 
         where TEntity : Model, TModel
         where TAggregate : IAggregateRoot<TAggregate, TKey, TProps, TModel>
-        where TKey : Key
-        where TProps : Props
         where TModel : IModel
     {
         protected readonly ApplicationDbContext Db;
