@@ -5,6 +5,7 @@ using Fiap.TasteEase.Application.Ports;
 using Fiap.TasteEase.Domain.Aggregates.Common;
 using Fiap.TasteEase.Domain.Ports;
 using FluentResults;
+using Mapster;
 
 namespace Fiap.TasteEase.Infra.Repository;
 
@@ -25,7 +26,7 @@ public abstract class Repository<TEntity, TAggregate, TKey, TProps, TModel>
 
     public virtual async Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TModel, bool>> predicate)
     {
-        var models = await DbSet.Where(predicate).ToListAsync();
+        var models = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         var aggregates = models.Select(model => 
             TAggregate.Rehydrate(model).ValueOrDefault);
         return Result.Ok(aggregates);
@@ -33,38 +34,42 @@ public abstract class Repository<TEntity, TAggregate, TKey, TProps, TModel>
     
     public virtual async Task<Result<TAggregate>> GetById(Guid id)
     {
-        var model = await DbSet.FindAsync(id);
+        var model = await DbSet.AsNoTracking().FirstOrDefaultAsync(f => f.Id == id);
         return model is null ? Result.Fail("not found") : Result.Ok(TAggregate.Rehydrate(model).ValueOrDefault);
     }
 
     public virtual async Task<Result<IEnumerable<TAggregate>>> GetAll()
     {
-        var models = await DbSet.ToListAsync();
+        var models = await DbSet.AsNoTracking().ToListAsync();
         var aggregates = models.Select(model => 
             TAggregate.Rehydrate(model).ValueOrDefault);
         return Result.Ok(aggregates);
     }
 
-    // public virtual async Task Add(TEntity entity)
-    // {
-    //     DbSet.Add(entity);
-    // }
-    //
-    // public virtual async Task Update(TEntity entity)
-    // {
-    //     DbSet.Update(entity);
-    // }
-    //
+    public virtual Result<bool> Add(TAggregate aggregate)
+    {
+        var result = aggregate.Adapt<TEntity>();
+        DbSet.Add(result);
+        return Result.Ok(true);
+    }
+    public virtual Result<bool> Update(TAggregate aggregate)
+    {
+        var result = aggregate.Adapt<TEntity>();
+        DbSet.Update(result);
+        return Result.Ok(true);
+    }
+    
     // public virtual async Task Delete(TEntity entity)
     // {
     //     DbSet.Remove(entity);
     // }
     //
-    // public async Task<int> SaveChanges()
-    // {
-    //     return await Db.SaveChangesAsync();
-    // }
-    //
+    public async Task<Result<int>> SaveChanges()
+    {
+        var result = await Db.SaveChangesAsync();
+        return Result.Ok(result);
+    }
+    
     // public async Task<int> CountAsync()
     // {
     //     return await DbSet.CountAsync();

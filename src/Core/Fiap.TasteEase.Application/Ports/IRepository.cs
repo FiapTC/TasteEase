@@ -13,9 +13,8 @@ public interface IRepository<TEntity, TAggregate, TKey, TProps, TModel>
     Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TModel, bool>> predicate);
     Task<Result<TAggregate>> GetById(Guid id);
     Task<Result<IEnumerable<TAggregate>>> GetAll();
-    // Task Update(TEntity entity);
+    Result<bool> Add(TAggregate model);
+    Result<bool> Update(TAggregate aggregate);
     // Task Delete(TEntity entity);
-    // Task<List<TEntity>> Get(Expression<Func<TEntity, bool>> predicate);
-    // Task<int> SaveChanges();
-    // Task<int> CountAsync();
+    Task<Result<int>> SaveChanges();
 }
