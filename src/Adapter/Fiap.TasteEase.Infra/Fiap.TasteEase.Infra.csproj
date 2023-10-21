@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.15.2" />
+    <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.12" />
@@ -23,6 +24,7 @@
     <ProjectReference Include="..\..\Core\Fiap.TasteEase.Application\Fiap.TasteEase.Application.csproj" />
     <ProjectReference Include="..\..\Core\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
   </ItemGroup>
+
 
 
 </Project>

@@ -4,7 +4,7 @@ using Fiap.TasteEase.Domain.Ports;
 
 namespace Fiap.TasteEase.Application.Ports;
 
-public interface IOrderRepository : IRepository<IOrderModel, Order, OrderId, OrderProps>
+public interface IOrderRepository : IRepository<IOrderModel, Order, OrderId, OrderProps, IOrderModel>
 {
     
 }

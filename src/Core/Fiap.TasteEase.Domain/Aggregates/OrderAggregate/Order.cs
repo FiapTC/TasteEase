@@ -35,19 +35,18 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     public static Result<Order> Rehydrate(OrderProps props, OrderId id)
         => Result.Ok(new Order(props, id));
 
-    public static Result<Order> Rehydrate(IModel model)
+    public static Result<Order> Rehydrate(IOrderModel model)
     {
-        var orderModel = model as IOrderModel;
         var order = new Order(
             new OrderProps(
-                orderModel.Description,
-                orderModel.Status,
-                orderModel.CreatedAt,
-                orderModel.CreatedBy,
-                orderModel.UpdatedAt,
-                orderModel.UpdatedBy
+                model.Description,
+                model.Status,
+                model.CreatedAt,
+                model.CreatedBy,
+                model.UpdatedAt,
+                model.UpdatedBy
             ), 
-            new OrderId(orderModel.Id)
+            new OrderId(model.Id)
         );
         
         return Result.Ok(order);

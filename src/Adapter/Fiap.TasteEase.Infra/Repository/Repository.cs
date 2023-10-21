@@ -1,18 +1,19 @@
 ﻿using Fiap.TasteEase.Infra.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 using Fiap.TasteEase.Application.Ports;
 using Fiap.TasteEase.Domain.Aggregates.Common;
+using Fiap.TasteEase.Domain.Ports;
 using FluentResults;
 
 namespace Fiap.TasteEase.Infra.Repository
 {
-    public abstract class Repository<TEntity, TAggregate, TKey, TProps> 
-        : IRepository<TEntity, TAggregate, TKey, TProps> 
-        where TEntity : Model
-        where TAggregate : IAggregateRoot<TAggregate, TKey, TProps>
+    public abstract class Repository<TEntity, TAggregate, TKey, TProps, TModel> 
+        : IRepository<TEntity, TAggregate, TKey, TProps, TModel> 
+        where TEntity : Model, TModel
+        where TAggregate : IAggregateRoot<TAggregate, TKey, TProps, TModel>
         where TKey : Key
         where TProps : Props
+        where TModel : IModel
     {
         protected readonly ApplicationDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
