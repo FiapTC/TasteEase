@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Fiap.TasteEase.Application.Ports;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fiap.TasteEase.Infra.Models
 {
     [Table("client", Schema = "taste_ease")]
-    public class ClientModel  
+    public class ClientModel : Model, IClientModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

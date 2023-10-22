@@ -1,5 +1,6 @@
 using Fiap.TasteEase.Api;
 using Fiap.TasteEase.Infra;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMapsterConfiguration();
+
+builder.Services.AddMediatRConfiguration();
 
 builder.Services.AddEfCoreConfiguration(builder.Configuration);
 
