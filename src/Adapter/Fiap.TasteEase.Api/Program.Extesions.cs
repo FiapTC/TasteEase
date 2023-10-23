@@ -12,9 +12,6 @@ public static class Program
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
 
-        //services.AddSingleton(config);
-        //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
         return services;
     }
 
@@ -24,7 +21,7 @@ public static class Program
 
         var mappersAssemblies = Array.Empty<Assembly>();
 
-        mappersAssemblies = mappersAssemblies.Append(typeof(Fiap.TasteEase.Infra.DependencyInjection).Assembly).ToArray();
+        mappersAssemblies = mappersAssemblies.Append(typeof(Infra.DependencyInjection).Assembly).ToArray();
 
         config.Scan(assemblies: mappersAssemblies);
         config.Default.AddDestinationTransform(DestinationTransform.EmptyCollectionIfNull);

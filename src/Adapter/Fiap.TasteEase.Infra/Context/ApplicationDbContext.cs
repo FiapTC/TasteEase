@@ -10,7 +10,8 @@ namespace Fiap.TasteEase.Infra.Context
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<OrderModel> Orders { get; set; } = null!;
-        
+        public DbSet<ClientModel> Clients { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
