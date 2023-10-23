@@ -23,6 +23,7 @@ namespace Fiap.TasteEase.Application.UseCases.ClientUseCase
                 return Result.Fail("Erro registrando cliente");
 
             var result = _clientRepository.Add(clientResult.ValueOrDefault);
+            await _clientRepository.SaveChanges();
 
             return Result.Ok("Cliente registrado com sucesso");
         }
