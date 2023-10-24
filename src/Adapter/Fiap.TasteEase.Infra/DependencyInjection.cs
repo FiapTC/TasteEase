@@ -21,6 +21,7 @@ namespace Fiap.TasteEase.Infra
             services.AddScoped<IApplicationDbContext, ApplicationDbContextAdapter>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IFoodRepository, FoodRepository>();
 
             return services;
         }

@@ -11,6 +11,7 @@ namespace Fiap.TasteEase.Infra.Context
 
         public DbSet<OrderModel> Orders { get; set; } = null!;
         public DbSet<ClientModel> Clients { get; set; } = null!;
+        public DbSet<FoodModel> Foods { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
