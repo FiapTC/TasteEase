@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using FluentResults;
+using MediatR;
 
 namespace Fiap.TasteEase.Application.UseCases.ClientUseCase
 {
-    public class Create : IRequest<string>
+    public class Create : IRequest<Result<string>>
     {
         public string Name { get; set; }
         public string TaxpayerNumber { get; set; }

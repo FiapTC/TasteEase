@@ -38,10 +38,10 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
             new OrderProps(
                 model.Description,
                 model.Status,
-                model.CreatedAt,
                 model.CreatedBy,
-                model.UpdatedAt,
-                model.UpdatedBy
+                model.UpdatedBy,
+                model.CreatedAt,
+                model.UpdatedAt
             ), 
             new OrderId(model.Id)
         );
@@ -63,8 +63,8 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
 public record OrderProps(
     string Description,
     OrderStatus Status,
-    DateTime CreatedAt,
     string CreatedBy,
-    DateTime UpdatedAt,
-    string UpdatedBy
+    string UpdatedBy,
+    DateTime CreatedAt,
+    DateTime UpdatedAt
 );
