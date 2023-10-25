@@ -90,6 +90,46 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.ToTable("food", "taste_ease");
                 });
 
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderFoodModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("FoodId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("food_id")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid?>("FoodModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("order_id")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid?>("OrderModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodModelId");
+
+                    b.HasIndex("OrderModelId");
+
+                    b.ToTable("order_food", "taste_ease");
+                });
+
             modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -131,6 +171,27 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("order", "taste_ease");
+                });
+
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderFoodModel", b =>
+                {
+                    b.HasOne("Fiap.TasteEase.Infra.Models.FoodModel", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("FoodModelId");
+
+                    b.HasOne("Fiap.TasteEase.Infra.Models.OrderModel", null)
+                        .WithMany("Foods")
+                        .HasForeignKey("OrderModelId");
+                });
+
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.FoodModel", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>
+                {
+                    b.Navigation("Foods");
                 });
 #pragma warning restore 612, 618
         }

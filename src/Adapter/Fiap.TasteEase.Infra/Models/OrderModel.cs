@@ -37,4 +37,6 @@ public class OrderModel : Model, IOrderModel
     [Required]
     [MaxLength(512)]
     public string UpdatedBy { get; set; }
+    
+    public virtual ICollection<OrderFoodModel>? Foods { get; set; } = null!;
 }

@@ -15,6 +15,7 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     public string CreatedBy => Props.CreatedBy;
     public DateTime UpdatedAt => Props.UpdatedAt;
     public string UpdatedBy => Props.UpdatedBy;
+    public IReadOnlySet<OrderFood> Foods => Props.Foods;
 
     public static Result<Order> Create(OrderProps props)
     {
@@ -66,5 +67,6 @@ public record OrderProps(
     string CreatedBy,
     string UpdatedBy,
     DateTime CreatedAt,
-    DateTime UpdatedAt
+    DateTime UpdatedAt,
+    IReadOnlySet<OrderFood>? Foods = null
 );

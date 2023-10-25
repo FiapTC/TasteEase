@@ -1,6 +1,6 @@
 ﻿namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
 
-public enum IFoodType
+public enum FoodType
 {
     Food,
     Drink,

@@ -26,12 +26,14 @@ namespace Fiap.TasteEase.Infra.Models
         public double Price { get; set; }
 
         [Column("type")]
-        public IFoodType Type { get; set; }
+        public FoodType Type { get; set; }
 
         [Column("created_at", TypeName = "timestamp without time zone")]
         public DateTime CreatedAt { get; set; }
 
         [Column("updated_at", TypeName = "timestamp without time zone")]
         public DateTime UpdatedAt { get; set; }
+        
+        public virtual ICollection<OrderFoodModel>? Orders { get; set; } = null!;
     }
 }

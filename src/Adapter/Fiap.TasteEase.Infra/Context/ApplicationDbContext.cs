@@ -22,6 +22,9 @@ namespace Fiap.TasteEase.Infra.Context
                 .Property(e => e.Status)
                 .HasConversion(new EnumToStringConverter<OrderStatus>());
             
+            modelBuilder.Entity<OrderFoodModel>()
+                .HasKey(e => new { e.Id });
+            
             base.OnModelCreating(modelBuilder);
         }
         
