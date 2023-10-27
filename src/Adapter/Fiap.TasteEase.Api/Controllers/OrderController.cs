@@ -25,7 +25,7 @@ namespace Fiap.TasteEase.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("Order")]
+        [HttpPost()]
         public async Task<ActionResult<ResponseViewModel<string>>> Post()
         {
             try
