@@ -13,8 +13,8 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
         public string? Description => Props.Description;
         public double Price => Props.Price;
         public FoodType Type => Props.Type;
-        public DateTime CreatedAt => Props.CreatedAt;
-        public DateTime UpdatedAt => Props.UpdatedAt;
+        public DateTime? CreatedAt => Props.CreatedAt;
+        public DateTime? UpdatedAt => Props.UpdatedAt;
 
         public static Result<Food> Create(FoodProps props)
         {
@@ -48,6 +48,20 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
 
             return Result.Ok(Food);
         }
+
+        public Result<Food> Update(FoodProps props)
+        {
+            Props = Props with
+            {
+                Name = props.Name,
+                Description = props.Description,
+                Type = props.Type,
+                Price = props.Price,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            return Result.Ok(this);
+        }
     }
 }
 
@@ -56,6 +70,6 @@ public record FoodProps(
     string Description,
     double Price,
     FoodType Type,
-    DateTime CreatedAt,
-    DateTime UpdatedAt
+    DateTime? CreatedAt = null,
+    DateTime? UpdatedAt = null
 );
