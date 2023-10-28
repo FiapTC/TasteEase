@@ -41,7 +41,7 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.Property<string>("TaxpayerNumber")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
-                        .HasColumnName("taxpayerNumber");
+                        .HasColumnName("taxpayer_number");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -97,6 +97,9 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid?>("ClientModelId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
@@ -122,6 +125,8 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnName("quantity");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientModelId");
 
                     b.HasIndex("FoodModelId");
 
@@ -170,6 +175,10 @@ namespace Fiap.TasteEase.Infra.Migrations
 
             modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderFoodModel", b =>
                 {
+                    b.HasOne("Fiap.TasteEase.Infra.Models.ClientModel", null)
+                        .WithMany("Foods")
+                        .HasForeignKey("ClientModelId");
+
                     b.HasOne("Fiap.TasteEase.Infra.Models.FoodModel", null)
                         .WithMany("Orders")
                         .HasForeignKey("FoodModelId");
@@ -188,6 +197,11 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.ClientModel", b =>
+                {
+                    b.Navigation("Foods");
                 });
 
             modelBuilder.Entity("Fiap.TasteEase.Infra.Models.FoodModel", b =>
