@@ -58,12 +58,14 @@ public abstract class Repository<TEntity, TAggregate, TKey, TCreateProps, TRehyd
         DbSet.Update(result);
         return Result.Ok(true);
     }
-    
-    // public virtual async Task Delete(TEntity entity)
-    // {
-    //     DbSet.Remove(entity);
-    // }
-    //
+
+    public virtual Result<bool> Delete(TAggregate aggregate)
+    {
+        var result = aggregate.Adapt<TEntity>();
+        DbSet.Remove(result);
+        return Result.Ok(true);
+    }
+
     public async Task<Result<int>> SaveChanges()
     {
         var result = await Db.SaveChangesAsync();

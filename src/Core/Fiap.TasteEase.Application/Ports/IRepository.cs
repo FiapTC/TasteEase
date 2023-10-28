@@ -15,6 +15,6 @@ public interface IRepository<TEntity, TAggregate, TKey, TCreateProps, TRehydrate
     Task<Result<IEnumerable<TAggregate>>> GetAll();
     Result<bool> Add(TAggregate model);
     Result<bool> Update(TAggregate aggregate);
-    // Task Delete(TEntity entity);
+    Result<bool> Delete(TAggregate aggregate);
     Task<Result<int>> SaveChanges();
 }

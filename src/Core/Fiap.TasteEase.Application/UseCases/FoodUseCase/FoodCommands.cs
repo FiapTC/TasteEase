@@ -10,6 +10,19 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
         public string Description { get; set; }
         public double Price { get; set; }
         public FoodType Type { get; set; }
-        public Guid ClientId { get; set; }
+    }
+
+    public class Update : IRequest<Result<string>>
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public double Price { get; set; }
+        public FoodType Type { get; set; }
+    }
+
+    public class Delete : IRequest<Result<string>>
+    {
+        public Guid Id { get; set; }
     }
 }
