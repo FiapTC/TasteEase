@@ -12,6 +12,11 @@ namespace Fiap.TasteEase.Application.Mappers.Order
             config.ForType<Create, CreateOrderProps>()
                 .Map(model => model.Description, src => src.Description)
                 .Map(model => model.ClientId, src => src.ClientId);
+            
+            config.ForType<OrderFoodCreate, OrderFood>()
+                .Map(model => model.FoodId, src => src.FoodId)
+                .Map(model => model.Quantity, src => src.Quantity)
+                .Map(model => model.CreatedAt, src => DateTime.UtcNow);
         }
     }
 }

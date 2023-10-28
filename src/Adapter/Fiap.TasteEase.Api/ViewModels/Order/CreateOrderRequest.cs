@@ -5,7 +5,7 @@ namespace Fiap.TasteEase.Api.ViewModels.Order;
 public record OrderRequest(
     string Description,
     Guid ClientId,
-    IReadOnlySet<OrderFoodRequest>? Foods = null
+    IEnumerable<OrderFoodRequest>? Foods = null
 );
 
 public record OrderFoodRequest(

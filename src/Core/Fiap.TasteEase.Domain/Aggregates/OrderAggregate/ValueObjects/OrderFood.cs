@@ -4,45 +4,8 @@ using FluentResults;
 
 namespace Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 
-public class OrderFood : 
-    Entity<OrderFoodId, OrderFoodProps>, 
-    IAggregateRoot<OrderFood, OrderFoodId, OrderFoodProps, OrderFoodProps, IOrderFoodModel>
-{
-    public OrderFood(OrderFoodProps props, OrderFoodId? id = default) : base(props, id) { }
-
-    public Guid OrderId => Props.OrderId;
-    public Guid FoodId => Props.FoodId;
-    public int Quantity => Props.Quantity;
-    public DateTime CreatedAt => Props.CreatedAt;
-    
-    public static Result<OrderFood> Create(OrderFoodProps props)
-    {
-        var order = new OrderFood(props);
-        return Result.Ok(order);
-    }
-
-    public static Result<OrderFood> Rehydrate(OrderFoodProps props, OrderFoodId id)
-        => Result.Ok(new OrderFood(props, id));
-
-    public static Result<OrderFood> Rehydrate(IOrderFoodModel model)
-    {
-        var orderFood = new OrderFood(
-            new OrderFoodProps(
-                model.OrderId,
-                model.FoodId,
-                model.Quantity,
-                model.CreatedAt
-            ), 
-            new OrderFoodId(model.Id)
-        );
-        
-        return Result.Ok(orderFood);
-    }
-}
-    
-public record OrderFoodProps(
-    Guid OrderId,
+public record OrderFood(
     Guid FoodId,
     int Quantity,
-    DateTime CreatedAt = default
+    DateTime CreatedAt
 );

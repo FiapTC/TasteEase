@@ -17,8 +17,6 @@ namespace Fiap.TasteEase.Infra.Mappers
                 .Map(model => model.UpdatedAt, src => src.UpdatedAt);
             
             config.ForType<OrderFood, OrderFoodModel>()
-                .Map(model => model.Id, src => src.Id!.Value)
-                .Map(model => model.OrderId, src => src.OrderId)
                 .Map(model => model.FoodId, src => src.FoodId)
                 .Map(model => model.Quantity, src => src.Quantity)
                 .Map(model => model.CreatedAt, src => src.CreatedAt);

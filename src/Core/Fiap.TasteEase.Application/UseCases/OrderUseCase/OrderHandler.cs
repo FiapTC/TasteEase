@@ -30,13 +30,7 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
 
             if (request.Foods?.Any() ?? false)
             {
-                var orderFoods = new List<OrderFood>(request.Foods.Count());
-                orderFoods.AddRange(request.Foods
-                    .Select(food => 
-                        new OrderFood(new OrderFoodProps(order.Id!.Value, food.FoodId, food.Quantity)
-                        )
-                    )
-                );
+                var orderFoods = request.Foods.Adapt<List<OrderFood>>();
                 order.AddFood(orderFoods);
             }
             var result = _orderRepository.Add(order);
