@@ -21,7 +21,7 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
         public async Task<Result<string>> Handle(Create request, CancellationToken cancellationToken)
         {
             var foodResult = Food.Create(
-                new FoodProps(
+                new CreateFoodProps(
                     request.Name,
                     request.Description,
                     request.Price,
@@ -44,7 +44,7 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
                 return Result.Fail("Comida não existe");
 
             var newFood = foodResult.ValueOrDefault.Update(
-                new FoodProps(
+                new CreateFoodProps(
                     request.Name, 
                     request.Description, 
                     request.Price, 

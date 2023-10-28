@@ -52,7 +52,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
             return Result.Ok(food);
         }
 
-        public Result<Food> Update(FoodProps props)
+        public Result<Food> Update(CreateFoodProps props)
         {
             Props = Props with
             {
