@@ -9,5 +9,11 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
         public string Description { get; set; }
         public OrderStatus Status { get; set; }
         public Guid ClientId { get; set; }
+        public IEnumerable<OrderFoodCreate>? Foods { get; set; } = null;
     }
+
+    public record OrderFoodCreate(
+        Guid FoodId,
+        int Quantity
+    );
 }

@@ -7,7 +7,8 @@ using Fiap.TasteEase.Infra.Models;
 
 namespace Fiap.TasteEase.Infra.Repository
 {
-    public class FoodRepository : Repository<FoodModel, Food, FoodId, FoodProps, IFoodModel>, IFoodRepository
+    public class FoodRepository 
+        : Repository<FoodModel, Food, FoodId, CreateFoodProps, FoodProps, IFoodModel>, IFoodRepository
     {
         public FoodRepository(ApplicationDbContext db) : base(db) { }
     }

@@ -16,17 +16,20 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
         public DateTime CreatedAt => Props.CreatedAt;
         public DateTime UpdatedAt => Props.UpdatedAt;
 
-        public static Result<Food> Create(FoodProps props)
+        public static Result<Food> Create(CreateFoodProps props)
         {
             var date = DateTime.UtcNow;
-            var Food = new Food(
-                props with
-                {
-                    CreatedAt = date,
-                    UpdatedAt = date
-                }
+            var foodProps = new FoodProps(
+                props.Name,
+                props.Description,
+                props.Price,
+                props.Type,
+                date,
+                date
             );
-            return Result.Ok(Food);
+            
+            var food = new Food(foodProps);
+            return Result.Ok(food);
         }
 
         public static Result<Food> Rehydrate(FoodProps props, FoodId id)
@@ -34,7 +37,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
 
         public static Result<Food> Rehydrate(IFoodModel model)
         {
-            var Food = new Food(
+            var food = new Food(
                 new FoodProps(
                     model.Name,
                     model.Description,
@@ -46,7 +49,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
                 new FoodId(model.Id)
             );
 
-            return Result.Ok(Food);
+            return Result.Ok(food);
         }
     }
 }
@@ -58,4 +61,11 @@ public record FoodProps(
     FoodType Type,
     DateTime CreatedAt,
     DateTime UpdatedAt
+);
+
+public record CreateFoodProps(
+    string Name,
+    string Description,
+    double Price,
+    FoodType Type
 );

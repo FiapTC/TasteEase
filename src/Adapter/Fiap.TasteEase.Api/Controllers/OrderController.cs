@@ -1,9 +1,12 @@
 using Fiap.TasteEase.Api.ViewModels;
+using Fiap.TasteEase.Api.ViewModels.Order;
 using Fiap.TasteEase.Application.Ports;
+using Fiap.TasteEase.Application.UseCases.OrderUseCase;
 using Fiap.TasteEase.Domain.Aggregates.ClientAggregate;
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate;
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 using Fiap.TasteEase.Infra.Models;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,18 +29,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
 
         [HttpPost()]
-        public async Task<ActionResult<ResponseViewModel<string>>> Post()
+        public async Task<ActionResult<ResponseViewModel<string>>> Create([FromBody] OrderRequest request)
         {
             try
             {
-                var command = new Application.UseCases.ClientUseCase.Create()
-                {
-                    Name = "Test",
-                    TaxpayerNumber = "123456789",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedA = DateTime.UtcNow
-                };
-
+                var command = request.Adapt<Create>();
                 var response = await _mediator.Send(command);
 
                 if (response.IsFailed)

@@ -137,15 +137,14 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("client_id")
+                        .HasColumnOrder(0);
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)")
-                        .HasColumnName("created_by");
 
                     b.Property<string>("Description")
                         .HasMaxLength(512)
@@ -162,13 +161,9 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("updated_at");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)")
-                        .HasColumnName("updated_by");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("order", "taste_ease");
                 });
@@ -182,6 +177,17 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.HasOne("Fiap.TasteEase.Infra.Models.OrderModel", null)
                         .WithMany("Foods")
                         .HasForeignKey("OrderModelId");
+                });
+
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>
+                {
+                    b.HasOne("Fiap.TasteEase.Infra.Models.ClientModel", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Fiap.TasteEase.Infra.Models.FoodModel", b =>

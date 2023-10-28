@@ -11,22 +11,23 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
 
     public string Description => Props.Description;
     public OrderStatus Status => Props.Status;
+    public Guid ClientId => Props.ClientId;
     public DateTime CreatedAt => Props.CreatedAt;
-    public string CreatedBy => Props.CreatedBy;
     public DateTime UpdatedAt => Props.UpdatedAt;
-    public string UpdatedBy => Props.UpdatedBy;
     public IReadOnlySet<OrderFood> Foods => Props.Foods;
 
-    public static Result<Order> Create(OrderProps props)
+    public static Result<Order> Create(CreateOrderProps props)
     {
         var date = DateTime.UtcNow;
-        var order = new Order(
-            props with
-            {
-                CreatedAt = date, 
-                UpdatedAt = date
-            }
+        var orderProps = new OrderProps(
+            props.Description,
+            OrderStatus.Created,
+            props.ClientId,
+            date,
+            date
         );
+        
+        var order = new Order(orderProps);
         return Result.Ok(order);
     }
 
@@ -39,8 +40,7 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
             new OrderProps(
                 model.Description,
                 model.Status,
-                model.CreatedBy,
-                model.UpdatedBy,
+                model.ClientId,
                 model.CreatedAt,
                 model.UpdatedAt
             ), 
@@ -64,9 +64,14 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
 public record OrderProps(
     string Description,
     OrderStatus Status,
-    string CreatedBy,
-    string UpdatedBy,
+    Guid ClientId,
     DateTime CreatedAt,
     DateTime UpdatedAt,
+    IReadOnlySet<OrderFood>? Foods = null
+);
+
+public record CreateOrderProps(
+    string Description,
+    Guid ClientId,
     IReadOnlySet<OrderFood>? Foods = null
 );

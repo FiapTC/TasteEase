@@ -25,4 +25,6 @@ public class ClientModel : Model, IClientModel
 
     [Column("updated_at", TypeName = "timestamp without time zone")]
     public DateTime UpdatedAt { get; set; }
+    
+    public virtual ICollection<OrderFoodModel>? Foods { get; set; } = null!;
 }

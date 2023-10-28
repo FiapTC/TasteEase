@@ -4,4 +4,5 @@ using Fiap.TasteEase.Domain.Ports;
 
 namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate;
  
-public interface IFoodAggregate : IAggregateRoot<Food, FoodId, FoodProps, IFoodModel> { } 
+public interface IFoodAggregate 
+    : IAggregateRoot<Food, FoodId, CreateFoodProps, FoodProps, IFoodModel> { } 
