@@ -34,6 +34,6 @@ namespace Fiap.TasteEase.Infra.Models
         [Column("updated_at", TypeName = "timestamp without time zone")]
         public DateTime UpdatedAt { get; set; }
         
-        public virtual ICollection<OrderFoodModel>? Orders { get; set; } = null!;
+        public virtual ICollection<OrderFoodModel>? Foods { get; set; } = null!;
     }
 }

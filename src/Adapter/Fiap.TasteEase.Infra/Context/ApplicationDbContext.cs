@@ -1,4 +1,5 @@
-﻿using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
+﻿using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
+using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 using Fiap.TasteEase.Infra.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -21,6 +22,11 @@ namespace Fiap.TasteEase.Infra.Context
                 .Entity<OrderModel>()
                 .Property(e => e.Status)
                 .HasConversion(new EnumToStringConverter<OrderStatus>());
+            
+            modelBuilder
+                .Entity<FoodModel>()
+                .Property(e => e.Type)
+                .HasConversion(new EnumToStringConverter<FoodType>());
 
             modelBuilder.Owned<OrderFood>();
             

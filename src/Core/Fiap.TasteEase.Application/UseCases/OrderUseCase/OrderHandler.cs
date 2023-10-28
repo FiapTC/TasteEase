@@ -34,6 +34,7 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
                 order.AddFood(orderFoods);
             }
             var result = _orderRepository.Add(order);
+            await _orderRepository.SaveChanges();
 
             return Result.Ok("Cliente registrado com sucesso");
         }

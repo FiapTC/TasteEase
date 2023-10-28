@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fiap.TasteEase.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231025011531_add_order_food")]
-    partial class add_order_food
+    [Migration("20231028213017_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.Property<string>("TaxpayerNumber")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
-                        .HasColumnName("taxpayerNumber");
+                        .HasColumnName("taxpayer_number");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -80,8 +80,9 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("price");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer")
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("type");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -109,16 +110,10 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnName("food_id")
                         .HasColumnOrder(1);
 
-                    b.Property<Guid?>("FoodModelId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uuid")
                         .HasColumnName("order_id")
                         .HasColumnOrder(0);
-
-                    b.Property<Guid?>("OrderModelId")
-                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
@@ -126,9 +121,9 @@ namespace Fiap.TasteEase.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FoodModelId");
+                    b.HasIndex("FoodId");
 
-                    b.HasIndex("OrderModelId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("order_food", "taste_ease");
                 });
@@ -140,15 +135,14 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("client_id")
+                        .HasColumnOrder(0);
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)")
-                        .HasColumnName("created_by");
 
                     b.Property<string>("Description")
                         .HasMaxLength(512)
@@ -165,31 +159,51 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("updated_at");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("character varying(512)")
-                        .HasColumnName("updated_by");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("order", "taste_ease");
                 });
 
             modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderFoodModel", b =>
                 {
-                    b.HasOne("Fiap.TasteEase.Infra.Models.FoodModel", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("FoodModelId");
-
-                    b.HasOne("Fiap.TasteEase.Infra.Models.OrderModel", null)
+                    b.HasOne("Fiap.TasteEase.Infra.Models.FoodModel", "Food")
                         .WithMany("Foods")
-                        .HasForeignKey("OrderModelId");
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Fiap.TasteEase.Infra.Models.OrderModel", "Order")
+                        .WithMany("Foods")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Food");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>
+                {
+                    b.HasOne("Fiap.TasteEase.Infra.Models.ClientModel", "Client")
+                        .WithMany("Order")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.ClientModel", b =>
+                {
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Fiap.TasteEase.Infra.Models.FoodModel", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Foods");
                 });
 
             modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>

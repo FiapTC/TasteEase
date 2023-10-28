@@ -27,5 +27,8 @@ namespace Fiap.TasteEase.Infra.Models
 
         [Column("created_at", TypeName = "timestamp without time zone")]
         public DateTime CreatedAt { get; set; }
+        
+        public virtual OrderModel Order { get; set; } = null!;
+        public virtual FoodModel Food { get; set; } = null!;
     }
 }
