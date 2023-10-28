@@ -18,7 +18,7 @@ namespace Fiap.TasteEase.Application.UseCases.ClientUseCase
 
         public async Task<Result<string>> Handle(Create request, CancellationToken cancellationToken)
         {
-            var clientResult = Client.Create(new ClientProps(request.Name, request.TaxpayerNumber, DateTime.Now, DateTime.Now));
+            var clientResult = Client.Create(new CreateClientProps(request.Name, request.TaxpayerNumber));
             if (clientResult.IsFailed)
                 return Result.Fail("Erro registrando cliente");
 

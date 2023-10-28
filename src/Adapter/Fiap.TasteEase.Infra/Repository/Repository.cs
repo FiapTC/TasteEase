@@ -9,10 +9,10 @@ using Mapster;
 
 namespace Fiap.TasteEase.Infra.Repository;
 
-public abstract class Repository<TEntity, TAggregate, TKey, TProps, TModel> 
-    : IRepository<TEntity, TAggregate, TKey, TProps, TModel> 
+public abstract class Repository<TEntity, TAggregate, TKey, TCreateProps, TRehydrateProps, TModel> 
+    : IRepository<TEntity, TAggregate, TKey, TCreateProps, TRehydrateProps, TModel> 
     where TEntity : Model, TModel
-    where TAggregate : IAggregateRoot<TAggregate, TKey, TProps, TModel>
+    where TAggregate : IAggregateRoot<TAggregate, TKey, TCreateProps, TRehydrateProps, TModel>
     where TModel : IModel
 {
     protected readonly ApplicationDbContext Db;

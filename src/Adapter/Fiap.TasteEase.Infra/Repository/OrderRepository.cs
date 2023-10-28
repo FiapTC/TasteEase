@@ -8,7 +8,7 @@ using Fiap.TasteEase.Infra.Models;
 namespace Fiap.TasteEase.Infra.Repository;
 
 public class OrderRepository 
-    : Repository<OrderModel, Order, OrderId, OrderProps, IOrderModel>, IOrderRepository
+    : Repository<OrderModel, Order, OrderId, CreateOrderProps, OrderProps, IOrderModel>, IOrderRepository
 {
     public OrderRepository(ApplicationDbContext db) : base(db) { }
 }

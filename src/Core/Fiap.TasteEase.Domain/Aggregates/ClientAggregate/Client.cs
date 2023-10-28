@@ -13,16 +13,17 @@ namespace Fiap.TasteEase.Domain.Aggregates.ClientAggregate
         public DateTime CreatedAt => Props.CreatedAt;
         public DateTime UpdatedAt => Props.UpdatedAt;
 
-        public static Result<Client> Create(ClientProps props)
+        public static Result<Client> Create(CreateClientProps props)
         {
             var date = DateTime.UtcNow;
-            var order = new Client(
-                props with
-                {
-                    CreatedAt = date,
-                    UpdatedAt = date
-                }
+            var clientProps = new ClientProps(
+                props.Name,
+                props.TaxpayerNumber,
+                date,
+                date
             );
+            
+            var order = new Client(clientProps);
             return Result.Ok(order);
         }
 
@@ -51,4 +52,9 @@ public record ClientProps(
     string TaxpayerNumber,
     DateTime CreatedAt,
     DateTime UpdatedAt
+);
+
+public record CreateClientProps(
+    string Name,
+    string TaxpayerNumber
 );

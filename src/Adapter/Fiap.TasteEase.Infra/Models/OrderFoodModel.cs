@@ -14,11 +14,11 @@ namespace Fiap.TasteEase.Infra.Models
         [Column("id")]
         public Guid Id { get; set; }
 
-        [Key, Column("order_id", Order = 0)]
+        [Column("order_id", Order = 0)]
         [ForeignKey("order")]
         public Guid OrderId { get; set; }
 
-        [Key, Column("food_id", Order = 1)]
+        [Column("food_id", Order = 1)]
         [ForeignKey("food")]
         public Guid FoodId { get; set; }
 

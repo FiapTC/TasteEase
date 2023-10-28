@@ -4,7 +4,8 @@ using Fiap.TasteEase.Domain.Ports;
 
 namespace Fiap.TasteEase.Application.Ports;
 
-public interface IFoodRepository : IRepository<IFoodModel, Food, FoodId, FoodProps, IFoodModel>
+public interface IFoodRepository 
+    : IRepository<IFoodModel, Food, FoodId, CreateFoodProps, FoodProps, IFoodModel>
 {
 
 }

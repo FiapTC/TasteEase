@@ -19,14 +19,11 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
         public async Task<Result<string>> Handle(Create request, CancellationToken cancellationToken)
         {
             var clientResult = Order.Create(
-                new OrderProps(
-                    request.Description, 
-                    request.Status,
-                    "",
-                    "",
-                    DateTime.UtcNow, 
-                    DateTime.UtcNow
+                new CreateOrderProps(
+                    request.Description,
+                    Guid.NewGuid()
                 ));
+            
             if (clientResult.IsSuccess)
                 return Result.Fail("Erro registrando cliente");
 

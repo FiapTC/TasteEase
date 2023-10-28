@@ -3,5 +3,6 @@ using Fiap.TasteEase.Domain.Aggregates.Common;
 
 namespace Fiap.TasteEase.Domain.Aggregates.ClientAggregate
 {
-    public interface IClientAggregate : IAggregateRoot<Client, ClientId, ClientProps, IClientModel> { }
+    public interface IClientAggregate 
+        : IAggregateRoot<Client, ClientId, CreateClientProps, ClientProps, IClientModel> { }
 }

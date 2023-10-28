@@ -16,7 +16,7 @@ public class ClientModel : Model, IClientModel
     [MaxLength(512)]
     public string? Name { get; set; }
 
-    [Column("taxpayerNumber")]
+    [Column("taxpayer_number")]
     [MaxLength(256)]
     public string? TaxpayerNumber { get; set; }
 
@@ -25,4 +25,6 @@ public class ClientModel : Model, IClientModel
 
     [Column("updated_at", TypeName = "timestamp without time zone")]
     public DateTime UpdatedAt { get; set; }
+    
+    public virtual ICollection<OrderFoodModel>? Foods { get; set; } = null!;
 }

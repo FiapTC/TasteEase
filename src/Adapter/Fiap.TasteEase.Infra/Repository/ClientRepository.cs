@@ -7,7 +7,7 @@ using Fiap.TasteEase.Infra.Models;
 namespace Fiap.TasteEase.Infra.Repository;
 
 public class ClientRepository
-    : Repository<ClientModel, Client, ClientId, ClientProps, IClientModel>, IClientRepository
+    : Repository<ClientModel, Client, ClientId, CreateClientProps, ClientProps, IClientModel>, IClientRepository
 {
     public ClientRepository(ApplicationDbContext db) : base(db) { }
 

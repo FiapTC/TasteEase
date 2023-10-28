@@ -6,7 +6,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 
 public class OrderFood : 
     Entity<OrderFoodId, OrderFoodProps>, 
-    IAggregateRoot<OrderFood, OrderFoodId, OrderFoodProps, IOrderFoodModel>
+    IAggregateRoot<OrderFood, OrderFoodId, OrderFoodProps, OrderFoodProps, IOrderFoodModel>
 {
     public OrderFood(OrderFoodProps props, OrderFoodId? id = default) : base(props, id) { }
 

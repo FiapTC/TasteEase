@@ -22,21 +22,16 @@ public class OrderModel : Model, IOrderModel
     [MaxLength(128)]
     public OrderStatus Status { get; set; }
 
+    [Column("client_id", Order = 0)]
+    [ForeignKey("client")]
+    public Guid ClientId { get; set; }
+    
     [Column("created_at", TypeName = "timestamp without time zone")]
     public DateTime CreatedAt { get; set; }
 
-    [Column("created_by")]
-    [Required]
-    [MaxLength(512)]
-    public string CreatedBy { get; set; }
-
     [Column("updated_at", TypeName = "timestamp without time zone")]
     public DateTime UpdatedAt { get; set; }
-
-    [Column("updated_by")]
-    [Required]
-    [MaxLength(512)]
-    public string UpdatedBy { get; set; }
     
     public virtual ICollection<OrderFoodModel>? Foods { get; set; } = null!;
+    public virtual ClientModel Client { get; set; } = null!;
 }

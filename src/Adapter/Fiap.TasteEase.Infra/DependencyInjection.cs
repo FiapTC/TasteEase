@@ -1,6 +1,7 @@
 ﻿using Fiap.TasteEase.Application.Ports;
 using Fiap.TasteEase.Infra.Context;
 using Fiap.TasteEase.Infra.Repository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,14 @@ namespace Fiap.TasteEase.Infra
             services.AddScoped<IFoodRepository, FoodRepository>();
 
             return services;
+        }
+        
+        public static WebApplication UseSeedData(this WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+            using var appContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            appContext.Database.Migrate();
+            return app;
         }
     }
 }
