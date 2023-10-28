@@ -17,13 +17,7 @@ public class OrderFood :
     
     public static Result<OrderFood> Create(OrderFoodProps props)
     {
-        var date = DateTime.UtcNow;
-        var order = new OrderFood(
-            props with
-            {
-                CreatedAt = date
-            }
-        );
+        var order = new OrderFood(props);
         return Result.Ok(order);
     }
 
@@ -50,5 +44,5 @@ public record OrderFoodProps(
     Guid OrderId,
     Guid FoodId,
     int Quantity,
-    DateTime CreatedAt
+    DateTime CreatedAt = default
 );

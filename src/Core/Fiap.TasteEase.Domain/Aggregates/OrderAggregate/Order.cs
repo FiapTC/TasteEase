@@ -14,7 +14,7 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     public Guid ClientId => Props.ClientId;
     public DateTime CreatedAt => Props.CreatedAt;
     public DateTime UpdatedAt => Props.UpdatedAt;
-    public IReadOnlySet<OrderFood> Foods => Props.Foods;
+    public IReadOnlyList<OrderFood> Foods => Props.Foods;
 
     public static Result<Order> Create(CreateOrderProps props)
     {
@@ -36,18 +36,50 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
 
     public static Result<Order> Rehydrate(IOrderModel model)
     {
+        List<OrderFood>? foods = null;
+
+        // if (model.Foods?.Any() ?? false)
+        // {
+        //     foods = model.Foods
+        //     .Select(food => 
+        //         new OrderFood(
+        //             new OrderFoodProps(
+        //                 model.Id,
+        //                 food.FoodId,
+        //                 food.Quantity, 
+        //                 food.CreatedAt
+        //             ), 
+        //             new OrderFoodId(food.Id)
+        //         )
+        //     ).ToList();
+        // }
+        
         var order = new Order(
             new OrderProps(
                 model.Description,
                 model.Status,
                 model.ClientId,
                 model.CreatedAt,
-                model.UpdatedAt
+                model.UpdatedAt,
+                foods
             ), 
             new OrderId(model.Id)
         );
         
         return Result.Ok(order);
+    }
+    
+    public Result<Order> AddFood(List<OrderFood> foods)
+    {
+        var foodProps = new List<OrderFood>(foods.Count + (Props.Foods?.Count ?? 0));
+        foodProps.AddRange(Props?.Foods ?? Enumerable.Empty<OrderFood>());
+        foodProps.AddRange(foods);
+        
+        Props = Props with {
+            Foods = foodProps
+        };
+
+        return Result.Ok(this);
     }
 
     public Result<Order> UpdateStatus(OrderStatus newStatus)
@@ -67,11 +99,10 @@ public record OrderProps(
     Guid ClientId,
     DateTime CreatedAt,
     DateTime UpdatedAt,
-    IReadOnlySet<OrderFood>? Foods = null
+    List<OrderFood>? Foods = null
 );
 
 public record CreateOrderProps(
     string Description,
-    Guid ClientId,
-    IReadOnlySet<OrderFood>? Foods = null
+    Guid ClientId
 );

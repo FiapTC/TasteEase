@@ -20,11 +20,13 @@
 
   <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.15.2" />
+    <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
+
   </ItemGroup>
 
 
