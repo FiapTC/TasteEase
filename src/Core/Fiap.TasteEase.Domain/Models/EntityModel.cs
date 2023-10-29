@@ -4,5 +4,5 @@ namespace Fiap.TasteEase.Domain.Ports;
 
 public class EntityModel
 {
-    public Guid Id { get; set; }
+    public virtual Guid Id { get; set; }
 }

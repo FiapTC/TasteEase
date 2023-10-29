@@ -1,4 +1,8 @@
-﻿using Fiap.TasteEase.Domain.Aggregates.Common;
+﻿using Fiap.TasteEase.Domain.Aggregates.ClientAggregate;
+using Fiap.TasteEase.Domain.Aggregates.ClientAggregate.ValueObjects;
+using Fiap.TasteEase.Domain.Aggregates.Common;
+using Fiap.TasteEase.Domain.Aggregates.FoodAggregate;
+using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 using Fiap.TasteEase.Domain.Models;
 using FluentResults;
@@ -15,6 +19,7 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     public DateTime CreatedAt => Props.CreatedAt;
     public DateTime UpdatedAt => Props.UpdatedAt;
     public IReadOnlyList<OrderFood> Foods => Props.Foods;
+    public Client Client => Props.Client;
 
     public static Result<Order> Create(CreateOrderProps props)
     {
@@ -37,22 +42,39 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     public static Result<Order> Rehydrate(OrderModel model)
     {
         List<OrderFood>? foods = null;
+        if (model.Foods?.Any() ?? false)
+        {
+            foods = model.Foods
+            .Select(s => 
+                new OrderFood(
+                    s.FoodId,
+                    s.Quantity, 
+                    s.CreatedAt,
+                    s.Food is not null ? Food.Rehydrate(new FoodProps(
+                        s.Food.Name,
+                        s.Food.Description,
+                        s.Food.Price,
+                        s.Food.Type,
+                        s.Food.CreatedAt,
+                        s.Food.UpdatedAt
+                    ), new FoodId(s.Food.Id)).ValueOrDefault : null
+                )
+            ).ToList();
+        }
 
-        // if (model.Foods?.Any() ?? false)
-        // {
-        //     foods = model.Foods
-        //     .Select(food => 
-        //         new OrderFood(
-        //             new OrderFoodProps(
-        //                 model.Id,
-        //                 food.FoodId,
-        //                 food.Quantity, 
-        //                 food.CreatedAt
-        //             ), 
-        //             new OrderFoodId(food.Id)
-        //         )
-        //     ).ToList();
-        // }
+        Client? client = null;
+        if (model.Client is not null)
+        {
+            client = ClientAggregate.Client.Rehydrate(
+                new ClientProps(
+                    model.Client.Name,
+                    model.Client.TaxpayerNumber,
+                    model.Client.CreatedAt,
+                    model.Client.UpdatedAt
+                ),
+                new ClientId(model.Client.Id)
+            ).ValueOrDefault;
+        }
         
         var order = new Order(
             new OrderProps(
@@ -61,6 +83,7 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
                 model.ClientId,
                 model.CreatedAt,
                 model.UpdatedAt,
+                client,
                 foods
             ), 
             new OrderId(model.Id)
@@ -99,6 +122,7 @@ public record OrderProps(
     Guid ClientId,
     DateTime CreatedAt,
     DateTime UpdatedAt,
+    Client Client = null,
     List<OrderFood>? Foods = null
 );
 

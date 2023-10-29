@@ -19,6 +19,9 @@ namespace Fiap.TasteEase.Application.Mappers.Order
             
             config.ForType<OrderFood, OrderFoodResponseDto>()
                 .Map(model => model.FoodId, src => src.FoodId)
+                .Map(model => model.FoodName, src => src.Food.Name)
+                .Map(model => model.FoodType, src => src.Food.Type)
+                .Map(model => model.FoodDescription, src => src.Food.Description)
                 .Map(model => model.Quantity, src => src.Quantity)
                 .Map(model => model.CreatedAt, src => src.CreatedAt);
         }

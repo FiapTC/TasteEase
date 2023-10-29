@@ -14,9 +14,7 @@ namespace Fiap.TasteEase.Application.Mappers.Order
                 .Map(model => model.ClientId, src => src.ClientId);
             
             config.ForType<OrderFoodCreate, OrderFood>()
-                .Map(model => model.FoodId, src => src.FoodId)
-                .Map(model => model.Quantity, src => src.Quantity)
-                .Map(model => model.CreatedAt, src => DateTime.UtcNow);
+                .ConstructUsing(src => new OrderFood(src.FoodId, src.Quantity, DateTime.UtcNow));
         }
     }
 }
