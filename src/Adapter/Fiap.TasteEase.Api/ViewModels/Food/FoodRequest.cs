@@ -1,11 +1,8 @@
-﻿using Fiap.TasteEase.Domain.Aggregates.FoodAggregate;
-using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
-using FluentResults;
-using MediatR;
+﻿using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
 
-namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
+namespace Fiap.TasteEase.Api.ViewModels.Food
 {
-    public class Create : IRequest<Result<string>>
+    public class CreateFoodRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -13,7 +10,7 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
         public FoodType Type { get; set; }
     }
 
-    public class Update : IRequest<Result<string>>
+    public class UpdateFoodRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -22,8 +19,8 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
         public FoodType Type { get; set; }
     }
 
-    public class Delete : IRequest<Result<string>>
+    public class DeleteFoodRequest
     {
         public Guid Id { get; set; }
-    }       
+    }
 }

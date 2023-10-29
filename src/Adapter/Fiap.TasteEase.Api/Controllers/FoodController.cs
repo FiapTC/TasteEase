@@ -1,4 +1,8 @@
 ﻿using Fiap.TasteEase.Api.ViewModels;
+using Fiap.TasteEase.Api.ViewModels.Food;
+using Fiap.TasteEase.Application.UseCases.FoodUseCase;
+using Fiap.TasteEase.Domain.Aggregates.FoodAggregate;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,18 +24,93 @@ namespace Fiap.TasteEase.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ResponseViewModel<string>>> Post()
+        [HttpGet]
+        public async Task<ActionResult<ResponseViewModel<IEnumerable<FoodResponseDto>>>> GetAll()
         {
             try
             {
-                var command = new Application.UseCases.FoodUseCase.Create()
+                var response = await _mediator.Send(new GetAll());
+
+                if (response.IsFailed)
                 {
-                    Name = "Test",
-                    Description = "Dessert",
-                    Price = 1,
-                    Type = Domain.Aggregates.FoodAggregate.ValueObjects.FoodType.Dessert
-                };
+                    return StatusCode((int)StatusCodes.Status400BadRequest,
+                        new ResponseViewModel<string>
+                        {
+                            Error = true,
+                            ErrorMessages = response.Errors.Select(x => x.Message),
+                            Data = null!
+                        }
+                    );
+                }
+
+                return StatusCode((int)StatusCodes.Status200OK,
+                    new ResponseViewModel<IEnumerable<FoodResponseDto>>
+                    {
+                        Data = response.ValueOrDefault
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)StatusCodes.Status500InternalServerError,
+                    new ResponseViewModel<IEnumerable<FoodResponseDto>>
+                    {
+                        Error = true,
+                        ErrorMessages = new List<string> { ex.Message },
+                        Data = null!
+                    }
+                );
+            }
+        }
+
+        [HttpGet("GetById")]
+        public async Task<ActionResult<ResponseViewModel<FoodResponseDto>>> GetById([FromQuery] Guid id)
+        {
+            try
+            {
+                var response = await _mediator.Send(new GetById()
+                {
+                    Id = id
+                });
+
+                if (response.IsFailed)
+                {
+                    return StatusCode((int)StatusCodes.Status400BadRequest,
+                        new ResponseViewModel<string>
+                        {
+                            Error = true,
+                            ErrorMessages = response.Errors.Select(x => x.Message),
+                            Data = null!
+                        }
+                    );
+                }
+
+                return StatusCode((int)StatusCodes.Status200OK,
+                    new ResponseViewModel<FoodResponseDto>
+                    {
+                        Data = response.ValueOrDefault
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)StatusCodes.Status500InternalServerError,
+                    new ResponseViewModel<FoodResponseDto>
+                    {
+                        Error = true,
+                        ErrorMessages = new List<string> { ex.Message },
+                        Data = null!
+                    }
+                );
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ResponseViewModel<string>>> Post(CreateFoodRequest request)
+        {
+            try
+            {
+                var command = request.Adapt<Create>();
 
                 var response = await _mediator.Send(command);
 
@@ -68,18 +147,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ResponseViewModel<string>>> Put()
+        public async Task<ActionResult<ResponseViewModel<string>>> Put(UpdateFoodRequest request)
         {
             try
             {
-                var command = new Application.UseCases.FoodUseCase.Update()
-                {
-                    Id = Guid.Parse("55d9a591-e4fa-4f98-aa52-4543f3c61c41"),
-                    Name = "Test Update",
-                    Description = "Dessert Update",
-                    Price = 2,
-                    Type = Domain.Aggregates.FoodAggregate.ValueObjects.FoodType.Dessert
-                };
+                var command = request.Adapt<Update>();
 
                 var response = await _mediator.Send(command);
 
@@ -95,7 +167,7 @@ namespace Fiap.TasteEase.Api.Controllers
                     );
                 }
 
-                return StatusCode((int)StatusCodes.Status201Created,
+                return StatusCode((int)StatusCodes.Status200OK,
                     new ResponseViewModel<string>
                     {
                         Data = response.ValueOrDefault
@@ -116,14 +188,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<ResponseViewModel<string>>> Delete()
+        public async Task<ActionResult<ResponseViewModel<string>>> Delete(DeleteFoodRequest request)
         {
             try
             {
-                var command = new Application.UseCases.FoodUseCase.Delete()
-                {
-                    Id = Guid.Parse("55d9a591-e4fa-4f98-aa52-4543f3c61c41"),
-                };
+                var command = request.Adapt<Delete>();
 
                 var response = await _mediator.Send(command);
 
@@ -139,7 +208,7 @@ namespace Fiap.TasteEase.Api.Controllers
                     );
                 }
 
-                return StatusCode((int)StatusCodes.Status201Created,
+                return StatusCode((int)StatusCodes.Status200OK,
                     new ResponseViewModel<string>
                     {
                         Data = response.ValueOrDefault
