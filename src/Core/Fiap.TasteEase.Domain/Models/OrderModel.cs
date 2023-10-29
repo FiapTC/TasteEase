@@ -32,5 +32,6 @@ public class OrderModel : EntityModel
     public DateTime UpdatedAt { get; set; }
     
     public virtual ICollection<OrderFoodModel>? Foods { get; set; } = null!;
+    public virtual ICollection<OrderPaymentModel>? Payments { get; set; } = null!;
     public virtual ClientModel Client { get; set; } = null!;
 }

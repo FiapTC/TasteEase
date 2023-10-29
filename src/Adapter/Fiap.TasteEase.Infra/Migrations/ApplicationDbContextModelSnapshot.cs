@@ -164,6 +164,46 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.ToTable("order", "taste_ease");
                 });
 
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderPaymentModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("amount");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("order_id")
+                        .HasColumnOrder(0);
+
+                    b.Property<string>("PaymentLink")
+                        .IsRequired()
+                        .HasMaxLength(4098)
+                        .HasColumnType("character varying(4098)")
+                        .HasColumnName("payment_link");
+
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("reference");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("order_payment", "taste_ease");
+                });
+
             modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderFoodModel", b =>
                 {
                     b.HasOne("Fiap.TasteEase.Domain.Models.FoodModel", "Food")
@@ -194,6 +234,17 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderPaymentModel", b =>
+                {
+                    b.HasOne("Fiap.TasteEase.Domain.Models.OrderModel", "Order")
+                        .WithMany("Payments")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Fiap.TasteEase.Domain.Models.ClientModel", b =>
                 {
                     b.Navigation("Order");
@@ -207,6 +258,8 @@ namespace Fiap.TasteEase.Infra.Migrations
             modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderModel", b =>
                 {
                     b.Navigation("Foods");
+
+                    b.Navigation("Payments");
                 });
 #pragma warning restore 612, 618
         }

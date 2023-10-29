@@ -28,11 +28,14 @@ namespace Fiap.TasteEase.Infra.Context
                 .Property(e => e.Type)
                 .HasConversion(new EnumToStringConverter<FoodType>());
 
-            modelBuilder.Owned<OrderFood>();
-
             modelBuilder
                 .Entity<FoodModel>()
                 .Property(e => e.Price)
+                .HasPrecision(18, 2);
+            
+            modelBuilder
+                .Entity<OrderPaymentModel>()
+                .Property(e => e.Amount)
                 .HasPrecision(18, 2);
             
             base.OnModelCreating(modelBuilder);
