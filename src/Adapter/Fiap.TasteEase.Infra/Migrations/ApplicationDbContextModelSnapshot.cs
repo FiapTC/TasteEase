@@ -189,7 +189,7 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("paid");
 
-                    b.Property<DateTime>("PaidDate")
+                    b.Property<DateTime?>("PaidDate")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("paid_date");
 
@@ -208,6 +208,9 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("Reference")
+                        .IsUnique();
 
                     b.ToTable("order_payment", "taste_ease");
                 });

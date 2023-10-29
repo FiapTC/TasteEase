@@ -181,5 +181,84 @@ namespace Fiap.TasteEase.Api.Controllers
                 );
             }
         }
+        
+        [HttpPost("/[controller]/{orderId}/pay")]
+        public async Task<ActionResult<ResponseViewModel<OrderPaymentResponse>>> Pay([FromRoute] Guid orderId)
+        {
+            try
+            {
+                var response = await _mediator.Send(new Pay { OrderId = orderId });
+
+                if (response.IsFailed)
+                {
+                    return StatusCode((int)StatusCodes.Status400BadRequest, 
+                        new ResponseViewModel<OrderPaymentResponse>
+                        {
+                            Error = true,
+                            ErrorMessages = response.Errors.Select(x => x.Message),
+                            Data = null!
+                        }
+                    );
+                }
+
+                return StatusCode((int)StatusCodes.Status200OK, 
+                    new ResponseViewModel<OrderPaymentResponse>
+                    {
+                        Data = response.ValueOrDefault.Adapt<OrderPaymentResponse>()
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)StatusCodes.Status500InternalServerError, 
+                    new ResponseViewModel<OrderPaymentResponse>
+                    {
+                        Error = true,
+                        ErrorMessages = new List<string> { ex.Message },
+                        Data = null!
+                    }
+                );
+            }
+        }
+        
+        [HttpPost("/[controller]/process_payment")]
+        public async Task<ActionResult<ResponseViewModel<string>>> UpdatePayment([FromBody] UpdatePaymentRequest request)
+        {
+            try
+            {
+                var pay = request.Adapt<ProcessPayment>();
+                var response = await _mediator.Send(pay);
+
+                if (response.IsFailed)
+                {
+                    return StatusCode((int)StatusCodes.Status400BadRequest, 
+                        new ResponseViewModel<string>
+                        {
+                            Error = true,
+                            ErrorMessages = response.Errors.Select(x => x.Message),
+                            Data = null!
+                        }
+                    );
+                }
+
+                return StatusCode((int)StatusCodes.Status200OK, 
+                    new ResponseViewModel<string>
+                    {
+                        Data = response.ValueOrDefault
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)StatusCodes.Status500InternalServerError, 
+                    new ResponseViewModel<string>
+                    {
+                        Error = true,
+                        ErrorMessages = new List<string> { ex.Message },
+                        Data = null!
+                    }
+                );
+            }
+        }
     }
 }

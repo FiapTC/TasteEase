@@ -6,6 +6,7 @@ using Fiap.TasteEase.Domain.Models;
 using Fiap.TasteEase.Domain.Ports;
 using Fiap.TasteEase.Infra.Context;
 using FluentResults;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.TasteEase.Infra.Repository;
@@ -50,5 +51,28 @@ public class OrderRepository
             .ThenInclude(i => i.Food)
             .FirstOrDefaultAsync(f => f.Id == id);
         return query is null ? Result.Fail("não foi encontrado") : Result.Ok(Order.Rehydrate(query).ValueOrDefault);
+    }
+    
+    public async Task<Result<Order>> GetByPaymentReference(string reference)
+    {
+        var query = await DbSet.AsNoTracking()
+            .Include(i => i.Payments)
+            .Include(i => i.Client)
+            .Include(i => i.Foods)
+            .ThenInclude(i => i.Food)
+            .FirstOrDefaultAsync(f => f.Payments.FirstOrDefault(f => f.Reference == reference) != null);
+        return query is null ? Result.Fail("não foi encontrado") : Result.Ok(Order.Rehydrate(query).ValueOrDefault);
+    }
+    
+    public override Result<bool> Update(Order aggregate)
+    {
+        var result = aggregate.Adapt<OrderModel>();
+        result.Client = null;
+        foreach (var orderFoodModel in result.Foods)
+        {
+            orderFoodModel.Food = null;
+        }
+        DbSet.Update(result);
+        return Result.Ok(true);
     }
 }

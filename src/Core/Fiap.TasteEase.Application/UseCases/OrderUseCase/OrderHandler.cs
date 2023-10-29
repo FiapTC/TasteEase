@@ -119,11 +119,70 @@ public class UpdateOrderStatusHandler : IRequestHandler<UpdateStatus, Result<Ord
             return Result.Fail("não foi encontrado");
 
         var order = orderResult.ValueOrDefault;
+        var totalPrice = order.GetTotalPrice(order.Foods.Select(s => s.Food).ToList());
 
         order.UpdateStatus(request.Status);
         _orderRepository.Update(order);
         await _orderRepository.SaveChanges();
-        var totalPrice = order.GetTotalPrice(order.Foods.Select(s => s.Food).ToList());
         return Result.Ok(new OrderResponseCommand(order.Id.Value, order.ClientId, totalPrice.ValueOrDefault, order.Status));
+    }
+}
+
+public class PayOrderHandler : IRequestHandler<Pay, Result<OrderPaymentResponseCommand>>
+{
+    private readonly IMediator _mediator;
+    private readonly IOrderRepository _orderRepository;
+
+    public PayOrderHandler(IMediator mediator, IOrderRepository orderRepository)
+    {
+        _mediator = mediator;
+        _orderRepository = orderRepository;
+    }
+
+    public async Task<Result<OrderPaymentResponseCommand>> Handle(Pay request, CancellationToken cancellationToken)
+    {
+        var orderResult = await _orderRepository.GetById(request.OrderId);
+        
+        if (orderResult.IsFailed)
+            return Result.Fail("não foi encontrado");
+
+        var order = orderResult.ValueOrDefault;
+
+        var payment = order.Pay();
+        order.UpdateStatus(OrderStatus.WaitPayment);
+        _orderRepository.Update(order);
+        await _orderRepository.SaveChanges();
+        return Result.Ok(new OrderPaymentResponseCommand(order.Id.Value, payment.ValueOrDefault.PaymentLink));
+    }
+}
+
+public class ProcessPaymentOrderHandler : IRequestHandler<ProcessPayment, Result<string>>
+{
+    private readonly IMediator _mediator;
+    private readonly IOrderRepository _orderRepository;
+
+    public ProcessPaymentOrderHandler(IMediator mediator, IOrderRepository orderRepository)
+    {
+        _mediator = mediator;
+        _orderRepository = orderRepository;
+    }
+
+    public async Task<Result<string>> Handle(ProcessPayment request, CancellationToken cancellationToken)
+    {
+        var orderResult = await _orderRepository.GetByPaymentReference(request.Reference);
+        
+        if (orderResult.IsFailed)
+            return Result.Fail("não foi encontrado");
+
+        var order = orderResult.ValueOrDefault;
+
+        order.ProcessPayment(request.Reference, request.Paid, request.PaidDate);
+        
+        if (request.Paid)
+            order.UpdateStatus(OrderStatus.Paid);
+        
+        _orderRepository.Update(order);
+        await _orderRepository.SaveChanges();
+        return Result.Ok("processado com sucesso");
     }
 }

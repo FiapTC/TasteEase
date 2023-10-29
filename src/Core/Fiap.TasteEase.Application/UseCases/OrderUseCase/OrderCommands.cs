@@ -16,6 +16,18 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
         public Guid OrderId { get; init; }
         public OrderStatus Status { get; init; }
     }
+    
+    public class ProcessPayment : IRequest<Result<string>>
+    {
+        public string Reference { get; init; }
+        public bool Paid { get; init; }
+        public DateTime? PaidDate { get; init; }
+    }
+    
+    public class Pay : IRequest<Result<OrderPaymentResponseCommand>>
+    {
+        public Guid OrderId { get; init; }
+    }
 
     public record OrderFoodCreate(
         Guid FoodId,
@@ -27,5 +39,10 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
         Guid ClientId,
         decimal TotalPrice,
         OrderStatus Status
+    );
+    
+    public record OrderPaymentResponseCommand(
+        Guid OrderId,
+        string PaymentLink
     );
 }
