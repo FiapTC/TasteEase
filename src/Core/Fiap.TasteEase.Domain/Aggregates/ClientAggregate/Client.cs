@@ -24,7 +24,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.ClientAggregate
                 date
             );
             
-            var order = new Client(clientProps);
+            var order = new Client(clientProps, new ClientId(Guid.NewGuid()));
             return Result.Ok(order);
         }
 

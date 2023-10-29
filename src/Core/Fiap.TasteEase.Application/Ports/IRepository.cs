@@ -1,7 +1,6 @@
-﻿using System.Linq.Expressions;
-using Fiap.TasteEase.Domain.Aggregates.Common;
-using Fiap.TasteEase.Domain.Ports;
+﻿using Fiap.TasteEase.Domain.Ports;
 using FluentResults;
+using System.Linq.Expressions;
 
 namespace Fiap.TasteEase.Application.Ports;
 

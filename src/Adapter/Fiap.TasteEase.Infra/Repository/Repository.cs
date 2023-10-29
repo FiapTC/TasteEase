@@ -53,6 +53,7 @@ public abstract class Repository<TEntity, TAggregate, TKey, TCreateProps, TRehyd
         DbSet.Add(result);
         return Result.Ok(true);
     }
+
     public virtual Result<bool> Update(TAggregate aggregate)
     {
         var result = aggregate.Adapt<TEntity>();
