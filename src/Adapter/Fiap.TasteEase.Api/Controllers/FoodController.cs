@@ -1,4 +1,7 @@
 ﻿using Fiap.TasteEase.Api.ViewModels;
+using Fiap.TasteEase.Api.ViewModels.Food;
+using Fiap.TasteEase.Application.UseCases.FoodUseCase;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,17 +24,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseViewModel<string>>> Post()
+        public async Task<ActionResult<ResponseViewModel<string>>> Post(CreateFoodRequest request)
         {
             try
             {
-                var command = new Application.UseCases.FoodUseCase.Create()
-                {
-                    Name = "Test",
-                    Description = "Dessert",
-                    Price = 1,
-                    Type = Domain.Aggregates.FoodAggregate.ValueObjects.FoodType.Dessert
-                };
+                var command = request.Adapt<Create>();
 
                 var response = await _mediator.Send(command);
 
@@ -68,18 +65,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ResponseViewModel<string>>> Put()
+        public async Task<ActionResult<ResponseViewModel<string>>> Put(UpdateFoodRequest request)
         {
             try
             {
-                var command = new Application.UseCases.FoodUseCase.Update()
-                {
-                    Id = Guid.Parse("55d9a591-e4fa-4f98-aa52-4543f3c61c41"),
-                    Name = "Test Update",
-                    Description = "Dessert Update",
-                    Price = 2,
-                    Type = Domain.Aggregates.FoodAggregate.ValueObjects.FoodType.Dessert
-                };
+                var command = request.Adapt<Update>();
 
                 var response = await _mediator.Send(command);
 
@@ -116,14 +106,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<ResponseViewModel<string>>> Delete()
+        public async Task<ActionResult<ResponseViewModel<string>>> Delete(DeleteFoodRequest request)
         {
             try
             {
-                var command = new Application.UseCases.FoodUseCase.Delete()
-                {
-                    Id = Guid.Parse("55d9a591-e4fa-4f98-aa52-4543f3c61c41"),
-                };
+                var command = request.Adapt<Delete>();
 
                 var response = await _mediator.Send(command);
 

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
     <ProjectReference Include="..\Fiap.TasteEase.Infra\Fiap.TasteEase.Infra.csproj" />
   </ItemGroup>
 

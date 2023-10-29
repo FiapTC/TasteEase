@@ -1,7 +1,6 @@
 ﻿using Fiap.TasteEase.Domain.Aggregates.Common;
 using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
 using Fiap.TasteEase.Domain.Models;
-using Fiap.TasteEase.Domain.Ports;
 using FluentResults;
 
 namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
