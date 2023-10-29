@@ -10,4 +10,5 @@ public interface IOrderRepository
     : IRepository<OrderModel, Order>
 {
     Task<Result<IEnumerable<Order>>> GetByFilters(List<OrderStatus> status, Guid? clientId);
+    Task<Result<Order>> GetByPaymentReference(string reference);
 }

@@ -16,7 +16,7 @@ namespace Fiap.TasteEase.Infra
             {
                 options
                     .UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
-                        builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery));
+                        builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)).EnableSensitiveDataLogging();
             });
 
             services.AddScoped<IApplicationDbContext, ApplicationDbContextAdapter>();

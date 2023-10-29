@@ -37,6 +37,11 @@ namespace Fiap.TasteEase.Infra.Context
                 .Entity<OrderPaymentModel>()
                 .Property(e => e.Amount)
                 .HasPrecision(18, 2);
+
+            modelBuilder
+                .Entity<OrderPaymentModel>()
+                .HasIndex(e => e.Reference)
+                .IsUnique();
             
             base.OnModelCreating(modelBuilder);
         }

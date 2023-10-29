@@ -34,7 +34,7 @@ namespace Fiap.TasteEase.Domain.Models
         public DateTime CreatedAt { get; set; }
         
         [Column("paid_date", TypeName = "timestamp without time zone")]
-        public DateTime PaidDate { get; set; }
+        public DateTime? PaidDate { get; set; }
         
         public virtual OrderModel Order { get; set; } = null!;
     }
