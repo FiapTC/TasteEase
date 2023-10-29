@@ -23,10 +23,10 @@ public abstract class Repository<TEntity, TAggregate, TKey, TCreateProps, TRehyd
         DbSet = db.Set<TEntity>();
     }
     
-    public virtual async Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TEntity, bool>> predicate/*, params Expression<Func<TEntity, Model>>[] includes*/)
+    public virtual async Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, EntityModel>>[] includes)
     {
         var query = DbSet.AsNoTracking();
-        //query = includes.Aggregate(query, (current, expression) => current.Include(expression));
+        query = includes.Aggregate(query, (current, expression) => current.Include(expression));
         var models = await query.Where(predicate).ToListAsync();
         var aggregates = models.Select(model => 
             TAggregate.Rehydrate(model).ValueOrDefault);

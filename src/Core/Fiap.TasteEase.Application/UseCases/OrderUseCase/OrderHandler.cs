@@ -53,7 +53,7 @@ public class GetlAllOrderHandler : IRequestHandler<GetAll, Result<IEnumerable<Or
 
     public async Task<Result<IEnumerable<OrderResponseDto>>> Handle(GetAll request, CancellationToken cancellationToken)
     {
-        var ordersResult = await _orderRepository.GetAll();
+        var ordersResult = await _orderRepository.Get(m => true, i => i.Client);
         
         if (ordersResult.IsFailed)
             return Result.Fail("Erro ao obter os pedidos");
