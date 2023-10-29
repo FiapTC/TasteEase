@@ -6,9 +6,15 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
 {
     public class Create : IRequest<Result<OrderResponseCommand>>
     {
-        public string Description { get; set; }
-        public Guid ClientId { get; set; }
-        public IEnumerable<OrderFoodCreate>? Foods { get; set; } = null;
+        public string Description { get; init; }
+        public Guid ClientId { get; init; }
+        public IEnumerable<OrderFoodCreate>? Foods { get; init; } = null;
+    }
+    
+    public class UpdateStatus : IRequest<Result<OrderResponseCommand>>
+    {
+        public Guid OrderId { get; init; }
+        public OrderStatus Status { get; init; }
     }
 
     public record OrderFoodCreate(

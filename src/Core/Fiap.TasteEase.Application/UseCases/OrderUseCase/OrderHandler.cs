@@ -96,3 +96,34 @@ public class GetByIdHandler : IRequestHandler<GetById, Result<OrderResponseQuery
         return Result.Ok(response);
     }
 }
+
+public class UpdateOrderStatusHandler : IRequestHandler<UpdateStatus, Result<OrderResponseCommand>>
+{
+    private readonly IMediator _mediator;
+    private readonly IOrderRepository _orderRepository;
+
+    public UpdateOrderStatusHandler(IMediator mediator, IOrderRepository orderRepository)
+    {
+        _mediator = mediator;
+        _orderRepository = orderRepository;
+    }
+
+    public async Task<Result<OrderResponseCommand>> Handle(UpdateStatus request, CancellationToken cancellationToken)
+    {
+        var validStatus = new List<OrderStatus> { OrderStatus.Delivered, OrderStatus.Prepared };
+        if (!validStatus.Contains(request.Status)) return Result.Fail("não é possível alterar para essa situação");
+        
+        var orderResult = await _orderRepository.GetById(request.OrderId);
+        
+        if (orderResult.IsFailed)
+            return Result.Fail("não foi encontrado");
+
+        var order = orderResult.ValueOrDefault;
+
+        order.UpdateStatus(request.Status);
+        _orderRepository.Update(order);
+        await _orderRepository.SaveChanges();
+        var totalPrice = order.GetTotalPrice(order.Foods.Select(s => s.Food).ToList());
+        return Result.Ok(new OrderResponseCommand(order.Id.Value, order.ClientId, totalPrice.ValueOrDefault, order.Status));
+    }
+}

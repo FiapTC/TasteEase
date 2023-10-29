@@ -3,6 +3,7 @@
 public enum OrderStatus
 {
     Created,
+    Paid,
     Preparing,
     Prepared,
     Delivered

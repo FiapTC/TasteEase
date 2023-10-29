@@ -142,5 +142,44 @@ namespace Fiap.TasteEase.Api.Controllers
                 );
             }
         }
+        
+        [HttpPost("/[controller]/{orderId}/status")]
+        public async Task<ActionResult<ResponseViewModel<CreateOrderResponse>>> UpdateStatus([FromBody] UpdateOrderStatusRequest request, [FromRoute] Guid orderId)
+        {
+            try
+            {
+                var response = await _mediator.Send(new UpdateStatus { OrderId = orderId, Status = request.Status});
+
+                if (response.IsFailed)
+                {
+                    return StatusCode((int)StatusCodes.Status400BadRequest, 
+                        new ResponseViewModel<CreateOrderResponse>
+                        {
+                            Error = true,
+                            ErrorMessages = response.Errors.Select(x => x.Message),
+                            Data = null!
+                        }
+                    );
+                }
+
+                return StatusCode((int)StatusCodes.Status200OK, 
+                    new ResponseViewModel<CreateOrderResponse>
+                    {
+                        Data = response.ValueOrDefault.Adapt<CreateOrderResponse>()
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)StatusCodes.Status500InternalServerError, 
+                    new ResponseViewModel<CreateOrderResponse>
+                    {
+                        Error = true,
+                        ErrorMessages = new List<string> { ex.Message },
+                        Data = null!
+                    }
+                );
+            }
+        }
     }
 }
