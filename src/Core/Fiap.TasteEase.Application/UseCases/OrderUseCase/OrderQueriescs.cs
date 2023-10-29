@@ -8,7 +8,7 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
     public class GetAll : IRequest<Result<IEnumerable<OrderResponseQuery>>>
     {
         public Guid? ClientId { get; init; }
-        public OrderStatus? Status { get; init; }
+        public List<OrderStatus> Status { get; init; }
     }
 
     public class GetById : IRequest<Result<OrderResponseQuery>>

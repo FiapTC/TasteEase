@@ -25,7 +25,7 @@ public class OrderRepository
         return Result.Ok(aggregates);
     }
     
-    public async Task<Result<IEnumerable<Order>>> GetByFilters(OrderStatus? status, Guid? clientId)
+    public async Task<Result<IEnumerable<Order>>> GetByFilters(List<OrderStatus> status, Guid? clientId)
     {
         var query = DbSet.AsNoTracking()
             .Include(i => i.Client)
@@ -33,7 +33,7 @@ public class OrderRepository
             .ThenInclude(i => i.Food)
             .Where(w => true);
 
-        if (status is not null) query = query.Where(w => w.Status == (OrderStatus)status);
+        if (status.Any()) query = query.Where(w => status.Contains(w.Status));
         if (clientId is not null) query = query.Where(w => w.ClientId == clientId);
 
         var models = await query.OrderByDescending(o => o.CreatedAt).ToListAsync();

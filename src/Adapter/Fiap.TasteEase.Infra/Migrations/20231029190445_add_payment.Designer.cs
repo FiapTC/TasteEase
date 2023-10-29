@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fiap.TasteEase.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231029182813_add_payment")]
+    [Migration("20231029190445_add_payment")]
     partial class add_payment
     {
         /// <inheritdoc />
@@ -187,6 +187,14 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("order_id")
                         .HasColumnOrder(0);
+
+                    b.Property<bool>("Paid")
+                        .HasColumnType("boolean")
+                        .HasColumnName("paid");
+
+                    b.Property<DateTime>("PaidDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("paid_date");
 
                     b.Property<string>("PaymentLink")
                         .IsRequired()

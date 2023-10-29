@@ -185,6 +185,14 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnName("order_id")
                         .HasColumnOrder(0);
 
+                    b.Property<bool>("Paid")
+                        .HasColumnType("boolean")
+                        .HasColumnName("paid");
+
+                    b.Property<DateTime>("PaidDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("paid_date");
+
                     b.Property<string>("PaymentLink")
                         .IsRequired()
                         .HasMaxLength(4098)

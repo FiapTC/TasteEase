@@ -19,6 +19,9 @@ namespace Fiap.TasteEase.Domain.Models
         [Column("amount")]
         public decimal Amount { get; set; }
         
+        [Column("paid")]
+        public bool Paid { get; set; }
+        
         [Column("reference")]
         [MaxLength(256)]
         public string Reference { get; set; }
@@ -29,6 +32,9 @@ namespace Fiap.TasteEase.Domain.Models
 
         [Column("created_at", TypeName = "timestamp without time zone")]
         public DateTime CreatedAt { get; set; }
+        
+        [Column("paid_date", TypeName = "timestamp without time zone")]
+        public DateTime PaidDate { get; set; }
         
         public virtual OrderModel Order { get; set; } = null!;
     }

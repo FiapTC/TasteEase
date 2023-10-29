@@ -110,7 +110,7 @@ public class UpdateOrderStatusHandler : IRequestHandler<UpdateStatus, Result<Ord
 
     public async Task<Result<OrderResponseCommand>> Handle(UpdateStatus request, CancellationToken cancellationToken)
     {
-        var validStatus = new List<OrderStatus> { OrderStatus.Delivered, OrderStatus.Prepared };
+        var validStatus = new List<OrderStatus> { OrderStatus.Delivered, OrderStatus.Prepared, OrderStatus.Preparing };
         if (!validStatus.Contains(request.Status)) return Result.Fail("não é possível alterar para essa situação");
         
         var orderResult = await _orderRepository.GetById(request.OrderId);

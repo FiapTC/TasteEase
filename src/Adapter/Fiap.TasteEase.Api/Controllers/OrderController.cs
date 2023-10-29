@@ -65,11 +65,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
         
         [HttpGet()]
-        public async Task<ActionResult<ResponseViewModel<IEnumerable<OrderResponse>>>> GetAll([FromQuery] int? status, Guid? clientId)
+        public async Task<ActionResult<ResponseViewModel<IEnumerable<OrderResponse>>>> GetAll([FromQuery] List<OrderStatus> status, Guid? clientId)
         {
             try
             {
-                var response = await _mediator.Send(new GetAll { ClientId = clientId, Status = (OrderStatus?)status});
+                var response = await _mediator.Send(new GetAll { ClientId = clientId, Status = status});
 
                 if (response.IsFailed)
                 {

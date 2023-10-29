@@ -19,9 +19,11 @@ namespace Fiap.TasteEase.Infra.Migrations
                     order_id = table.Column<Guid>(type: "uuid", nullable: false),
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
+                    paid = table.Column<bool>(type: "boolean", nullable: false),
                     reference = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     payment_link = table.Column<string>(type: "character varying(4098)", maxLength: 4098, nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    paid_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {

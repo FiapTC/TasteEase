@@ -9,5 +9,5 @@ namespace Fiap.TasteEase.Application.Ports;
 public interface IOrderRepository 
     : IRepository<OrderModel, Order>
 {
-    Task<Result<IEnumerable<Order>>> GetByFilters(OrderStatus? status, Guid? clientId);
+    Task<Result<IEnumerable<Order>>> GetByFilters(List<OrderStatus> status, Guid? clientId);
 }
