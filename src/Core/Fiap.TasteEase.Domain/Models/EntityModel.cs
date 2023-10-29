@@ -1,8 +1,8 @@
 ﻿using Fiap.TasteEase.Domain.Ports;
 
-namespace Fiap.TasteEase.Application.Ports;
+namespace Fiap.TasteEase.Domain.Ports;
 
-public class Model : IModel
+public class EntityModel
 {
     public Guid Id { get; set; }
 }

@@ -1,5 +1,5 @@
 ﻿using Fiap.TasteEase.Domain.Aggregates.FoodAggregate;
-using Fiap.TasteEase.Infra.Models;
+using Fiap.TasteEase.Domain.Models;
 using Mapster;
 
 namespace Fiap.TasteEase.Infra.Mappers

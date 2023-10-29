@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Fiap.TasteEase.Application.Ports;
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 using Fiap.TasteEase.Domain.Ports;
 
-namespace Fiap.TasteEase.Infra.Models;
+namespace Fiap.TasteEase.Domain.Models;
 
 [Table("order", Schema = "taste_ease")]
-public class OrderModel : Model, IOrderModel
+public class OrderModel : EntityModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

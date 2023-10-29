@@ -9,11 +9,10 @@ using Mapster;
 
 namespace Fiap.TasteEase.Infra.Repository;
 
-public abstract class Repository<TEntity, TAggregate, TKey, TCreateProps, TRehydrateProps, TModel> 
-    : IRepository<TEntity, TAggregate, TKey, TCreateProps, TRehydrateProps, TModel> 
-    where TEntity : Model, TModel
-    where TAggregate : IAggregateRoot<TAggregate, TKey, TCreateProps, TRehydrateProps, TModel>
-    where TModel : IModel
+public abstract class Repository<TEntity, TAggregate, TKey, TCreateProps, TRehydrateProps> 
+    : IRepository<TEntity, TAggregate> 
+    where TEntity : EntityModel
+    where TAggregate : IAggregateRoot<TAggregate, TKey, TCreateProps, TRehydrateProps, TEntity>
 {
     protected readonly ApplicationDbContext Db;
     protected readonly DbSet<TEntity> DbSet;
@@ -24,7 +23,7 @@ public abstract class Repository<TEntity, TAggregate, TKey, TCreateProps, TRehyd
         DbSet = db.Set<TEntity>();
     }
     
-    public virtual async Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TModel, bool>> predicate/*, params Expression<Func<TEntity, Model>>[] includes*/)
+    public virtual async Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TEntity, bool>> predicate/*, params Expression<Func<TEntity, Model>>[] includes*/)
     {
         var query = DbSet.AsNoTracking();
         //query = includes.Aggregate(query, (current, expression) => current.Include(expression));

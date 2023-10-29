@@ -5,9 +5,9 @@ using FluentResults;
 
 namespace Fiap.TasteEase.Application.Ports;
 
-public interface IRepository<TEntity, TAggregate, TKey, TCreateProps, TRehydrateProps, TModel>
+public interface IRepository<TEntity, TAggregate>
 {
-    Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TModel, bool>> predicate);
+    Task<Result<IEnumerable<TAggregate>>> Get(Expression<Func<TEntity, bool>> predicate);
     Task<Result<TAggregate>> GetById(Guid id);
     Task<Result<IEnumerable<TAggregate>>> GetAll();
     Result<bool> Add(TAggregate model);

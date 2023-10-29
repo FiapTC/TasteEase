@@ -1,6 +1,6 @@
 ﻿using Fiap.TasteEase.Domain.Aggregates.Common;
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
-using Fiap.TasteEase.Domain.Ports;
+using Fiap.TasteEase.Domain.Models;
 using FluentResults;
 
 namespace Fiap.TasteEase.Domain.Aggregates.OrderAggregate;
@@ -34,7 +34,7 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
     public static Result<Order> Rehydrate(OrderProps props, OrderId id)
         => Result.Ok(new Order(props, id));
 
-    public static Result<Order> Rehydrate(IOrderModel model)
+    public static Result<Order> Rehydrate(OrderModel model)
     {
         List<OrderFood>? foods = null;
 

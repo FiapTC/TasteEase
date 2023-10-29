@@ -1,5 +1,6 @@
 ﻿using Fiap.TasteEase.Domain.Aggregates.ClientAggregate.ValueObjects;
 using Fiap.TasteEase.Domain.Aggregates.Common;
+using Fiap.TasteEase.Domain.Models;
 using FluentResults;
 
 namespace Fiap.TasteEase.Domain.Aggregates.ClientAggregate
@@ -30,7 +31,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.ClientAggregate
         public static Result<Client> Rehydrate(ClientProps props, ClientId id)
         => Result.Ok(new Client(props, id));
 
-        public static Result<Client> Rehydrate(IClientModel model)
+        public static Result<Client> Rehydrate(ClientModel model)
         {
             var order = new Client(
                 new ClientProps(

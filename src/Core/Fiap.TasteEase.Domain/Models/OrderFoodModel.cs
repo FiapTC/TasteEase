@@ -1,13 +1,11 @@
-﻿using Fiap.TasteEase.Application.Ports;
-using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
-using Fiap.TasteEase.Domain.Ports;
+﻿using Fiap.TasteEase.Domain.Ports;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Fiap.TasteEase.Infra.Models
+namespace Fiap.TasteEase.Domain.Models
 {
     [Table("order_food", Schema = "taste_ease")]
-    public class OrderFoodModel : Model, IOrderFoodModel
+    public class OrderFoodModel : EntityModel
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

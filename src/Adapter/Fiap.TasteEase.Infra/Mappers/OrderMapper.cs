@@ -1,6 +1,6 @@
 ﻿using Fiap.TasteEase.Domain.Aggregates.OrderAggregate;
 using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
-using Fiap.TasteEase.Infra.Models;
+using Fiap.TasteEase.Domain.Models;
 using Mapster;
 
 namespace Fiap.TasteEase.Infra.Mappers

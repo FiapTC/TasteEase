@@ -1,5 +1,6 @@
 ﻿using Fiap.TasteEase.Domain.Aggregates.Common;
 using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
+using Fiap.TasteEase.Domain.Models;
 using Fiap.TasteEase.Domain.Ports;
 using FluentResults;
 
@@ -35,7 +36,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
         public static Result<Food> Rehydrate(FoodProps props, FoodId id)
             => Result.Ok(new Food(props, id));
 
-        public static Result<Food> Rehydrate(IFoodModel model)
+        public static Result<Food> Rehydrate(FoodModel model)
         {
             var food = new Food(
                 new FoodProps(
