@@ -11,6 +11,11 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
         public OrderStatus? Status { get; init; }
     }
 
+    public class GetById : IRequest<Result<OrderResponseQuery>>
+    {
+        public Guid OrderId { get; init; }
+    }
+
     public record OrderResponseQuery(
         Guid Id,
         string Description,
@@ -27,6 +32,7 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
         string FoodName,
         FoodType FoodType,
         string FoodDescription,
+        decimal FoodPrice,
         int Quantity,
         DateTime CreatedAt
     );

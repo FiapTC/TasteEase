@@ -72,3 +72,27 @@ public class GetlAllOrderHandler : IRequestHandler<GetAll, Result<IEnumerable<Or
         return Result.Ok(response);
     }
 }
+
+public class GetByIdHandler : IRequestHandler<GetById, Result<OrderResponseQuery>>
+{
+    private readonly IMediator _mediator;
+    private readonly IOrderRepository _orderRepository;
+
+    public GetByIdHandler(IMediator mediator, IOrderRepository orderRepository)
+    {
+        _mediator = mediator;
+        _orderRepository = orderRepository;
+    }
+
+    public async Task<Result<OrderResponseQuery>> Handle(GetById request, CancellationToken cancellationToken)
+    {
+        var ordersResult = await _orderRepository.GetById(request.OrderId);
+        
+        if (ordersResult.IsFailed)
+            return Result.Fail("não foi encontrado");
+
+        var orders = ordersResult.ValueOrDefault;
+        var response = orders.Adapt<OrderResponseQuery>();
+        return Result.Ok(response);
+    }
+}

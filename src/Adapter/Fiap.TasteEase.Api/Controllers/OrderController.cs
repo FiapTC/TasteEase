@@ -102,5 +102,45 @@ namespace Fiap.TasteEase.Api.Controllers
                 );
             }
         }
+        
+        
+        [HttpGet("/[controller]/{orderId}")]
+        public async Task<ActionResult<ResponseViewModel<OrderResponse>>> GetById([FromRoute] Guid orderId)
+        {
+            try
+            {
+                var response = await _mediator.Send(new GetById { OrderId = orderId });
+
+                if (response.IsFailed)
+                {
+                    return StatusCode((int)StatusCodes.Status400BadRequest, 
+                        new ResponseViewModel<OrderResponse>
+                        {
+                            Error = true,
+                            ErrorMessages = response.Errors.Select(x => x.Message),
+                            Data = null!
+                        }
+                    );
+                }
+
+                return StatusCode((int)StatusCodes.Status200OK, 
+                    new ResponseViewModel<OrderResponse>
+                    {
+                        Data = response.ValueOrDefault.Adapt<OrderResponse>()
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)StatusCodes.Status500InternalServerError, 
+                    new ResponseViewModel<OrderResponse>
+                    {
+                        Error = true,
+                        ErrorMessages = new List<string> { ex.Message },
+                        Data = null!
+                    }
+                );
+            }
+        }
     }
 }

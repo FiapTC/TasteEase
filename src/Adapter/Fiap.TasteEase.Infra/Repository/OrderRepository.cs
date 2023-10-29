@@ -41,4 +41,14 @@ public class OrderRepository
             Order.Rehydrate(model).ValueOrDefault);
         return Result.Ok(aggregates);
     }
+    
+    public override async Task<Result<Order>> GetById(Guid id)
+    {
+        var query = await DbSet.AsNoTracking()
+            .Include(i => i.Client)
+            .Include(i => i.Foods)
+            .ThenInclude(i => i.Food)
+            .FirstOrDefaultAsync(f => f.Id == id);
+        return query is null ? Result.Fail("não foi encontrado") : Result.Ok(Order.Rehydrate(query).ValueOrDefault);
+    }
 }

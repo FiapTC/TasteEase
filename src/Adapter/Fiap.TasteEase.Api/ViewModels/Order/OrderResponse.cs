@@ -19,6 +19,7 @@ public record OrderFoodResponse(
     string FoodName,
     FoodType FoodType,
     string FoodDescription,
+    decimal FoodPrice,
     int Quantity,
     DateTime CreatedAt
 );

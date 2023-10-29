@@ -22,6 +22,7 @@ namespace Fiap.TasteEase.Application.Mappers.Order
                 .Map(model => model.FoodName, src => src.Food.Name)
                 .Map(model => model.FoodType, src => src.Food.Type)
                 .Map(model => model.FoodDescription, src => src.Food.Description)
+                .Map(model => model.FoodPrice, src => src.Food.Price)
                 .Map(model => model.Quantity, src => src.Quantity)
                 .Map(model => model.CreatedAt, src => src.CreatedAt);
         }
