@@ -7,24 +7,26 @@ using MediatR;
 
 namespace Fiap.TasteEase.Application.UseCases.OrderUseCase;
 
-public class CreateOrderHandler : IRequestHandler<Create, Result<string>>
+public class CreateOrderHandler : IRequestHandler<Create, Result<OrderResponseCommand>>
 {
     private readonly IMediator _mediator;
     private readonly IOrderRepository _orderRepository;
+    private readonly IFoodRepository _foodRepository;
 
-    public CreateOrderHandler(IMediator mediator, IOrderRepository orderRepository)
+    public CreateOrderHandler(IMediator mediator, IOrderRepository orderRepository, IFoodRepository foodRepository)
     {
         _mediator = mediator;
         _orderRepository = orderRepository;
+        _foodRepository = foodRepository;
     }
 
-    public async Task<Result<string>> Handle(Create request, CancellationToken cancellationToken)
+    public async Task<Result<OrderResponseCommand>> Handle(Create request, CancellationToken cancellationToken)
     {
         var orderProps = request.Adapt<CreateOrderProps>();
         var orderResult = Order.Create(orderProps);
         
         if (orderResult.IsFailed)
-            return Result.Fail("Erro registrando cliente");
+            return Result.Fail("Erro ao registrar o pedido");
 
         var order = orderResult.ValueOrDefault;
 
@@ -36,11 +38,18 @@ public class CreateOrderHandler : IRequestHandler<Create, Result<string>>
         var result = _orderRepository.Add(order);
         await _orderRepository.SaveChanges();
 
-        return Result.Ok("Cliente registrado com sucesso");
+        var foodIds = order.Foods.Select(s => s.FoodId);
+        var foodsResult = await _foodRepository.GetByIds(foodIds);
+        var totalPrice = order.GetTotalPrice(foodsResult.ValueOrDefault).ValueOrDefault;
+        
+        if (orderResult.IsFailed)
+            return Result.Fail("Erro ao calcular o valor");
+        
+        return Result.Ok(new OrderResponseCommand(order.Id.Value, order.ClientId, totalPrice, order.Status));
     }
 }
 
-public class GetlAllOrderHandler : IRequestHandler<GetAll, Result<IEnumerable<OrderResponseDto>>>
+public class GetlAllOrderHandler : IRequestHandler<GetAll, Result<IEnumerable<OrderResponseQuery>>>
 {
     private readonly IMediator _mediator;
     private readonly IOrderRepository _orderRepository;
@@ -51,7 +60,7 @@ public class GetlAllOrderHandler : IRequestHandler<GetAll, Result<IEnumerable<Or
         _orderRepository = orderRepository;
     }
 
-    public async Task<Result<IEnumerable<OrderResponseDto>>> Handle(GetAll request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<OrderResponseQuery>>> Handle(GetAll request, CancellationToken cancellationToken)
     {
         var ordersResult = await _orderRepository.GetByFilters(request.Status, request.ClientId);
         
@@ -59,7 +68,7 @@ public class GetlAllOrderHandler : IRequestHandler<GetAll, Result<IEnumerable<Or
             return Result.Fail("Erro ao obter os pedidos");
 
         var orders = ordersResult.ValueOrDefault;
-        var response = orders.Adapt<IEnumerable<OrderResponseDto>>();
+        var response = orders.Adapt<IEnumerable<OrderResponseQuery>>();
         return Result.Ok(response);
     }
 }

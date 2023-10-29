@@ -5,13 +5,13 @@ using MediatR;
 
 namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
 {
-    public class GetAll : IRequest<Result<IEnumerable<OrderResponseDto>>>
+    public class GetAll : IRequest<Result<IEnumerable<OrderResponseQuery>>>
     {
         public Guid? ClientId { get; init; }
         public OrderStatus? Status { get; init; }
     }
 
-    public record OrderResponseDto(
+    public record OrderResponseQuery(
         Guid Id,
         string Description,
         OrderStatus Status,
@@ -19,10 +19,10 @@ namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
         string ClientName,
         DateTime CreatedAt,
         DateTime UpdatedAt,
-        IEnumerable<OrderFoodResponseDto>? Foods
+        IEnumerable<OrderFoodResponseQuery>? Foods
     );
 
-    public record OrderFoodResponseDto(
+    public record OrderFoodResponseQuery(
         Guid FoodId,
         string FoodName,
         FoodType FoodType,

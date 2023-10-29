@@ -22,7 +22,7 @@ namespace Fiap.TasteEase.Infra.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.ClientModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.ClientModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.ToTable("client", "taste_ease");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.FoodModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.FoodModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,8 +73,9 @@ namespace Fiap.TasteEase.Infra.Migrations
                         .HasColumnType("character varying(512)")
                         .HasColumnName("name");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision")
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
                         .HasColumnName("price");
 
                     b.Property<string>("Type")
@@ -91,7 +92,7 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.ToTable("food", "taste_ease");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderFoodModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderFoodModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,7 +126,7 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.ToTable("order_food", "taste_ease");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,15 +164,15 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.ToTable("order", "taste_ease");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderFoodModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderFoodModel", b =>
                 {
-                    b.HasOne("Fiap.TasteEase.Infra.Models.FoodModel", "Food")
+                    b.HasOne("Fiap.TasteEase.Domain.Models.FoodModel", "Food")
                         .WithMany("Foods")
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Fiap.TasteEase.Infra.Models.OrderModel", "Order")
+                    b.HasOne("Fiap.TasteEase.Domain.Models.OrderModel", "Order")
                         .WithMany("Foods")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -182,9 +183,9 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderModel", b =>
                 {
-                    b.HasOne("Fiap.TasteEase.Infra.Models.ClientModel", "Client")
+                    b.HasOne("Fiap.TasteEase.Domain.Models.ClientModel", "Client")
                         .WithMany("Order")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -193,17 +194,17 @@ namespace Fiap.TasteEase.Infra.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.ClientModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.ClientModel", b =>
                 {
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.FoodModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.FoodModel", b =>
                 {
                     b.Navigation("Foods");
                 });
 
-            modelBuilder.Entity("Fiap.TasteEase.Infra.Models.OrderModel", b =>
+            modelBuilder.Entity("Fiap.TasteEase.Domain.Models.OrderModel", b =>
                 {
                     b.Navigation("Foods");
                 });

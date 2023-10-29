@@ -9,7 +9,7 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public FoodType Type { get; set; }
     }
 
@@ -18,7 +18,7 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public FoodType Type { get; set; }
     }
 

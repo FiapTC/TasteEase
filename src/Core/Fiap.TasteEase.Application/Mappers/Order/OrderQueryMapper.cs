@@ -9,7 +9,7 @@ namespace Fiap.TasteEase.Application.Mappers.Order
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.ForType<Domain.Aggregates.OrderAggregate.Order, OrderResponseDto>()
+            config.ForType<Domain.Aggregates.OrderAggregate.Order, OrderResponseQuery>()
                 .Map(model => model.Id, src => src.Id.Value)
                 .Map(model => model.Description, src => src.Description)
                 .Map(model => model.ClientId, src => src.ClientId)
@@ -17,7 +17,7 @@ namespace Fiap.TasteEase.Application.Mappers.Order
                 .Map(model => model.UpdatedAt, src => src.UpdatedAt)
                 .Map(model => model.Foods, src => src.Foods);
             
-            config.ForType<OrderFood, OrderFoodResponseDto>()
+            config.ForType<OrderFood, OrderFoodResponseQuery>()
                 .Map(model => model.FoodId, src => src.FoodId)
                 .Map(model => model.FoodName, src => src.Food.Name)
                 .Map(model => model.FoodType, src => src.Food.Type)

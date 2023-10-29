@@ -22,7 +22,7 @@ namespace Fiap.TasteEase.Domain.Models
         public string? Description { get; set; }
 
         [Column("price")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [Column("type")]
         public FoodType Type { get; set; }

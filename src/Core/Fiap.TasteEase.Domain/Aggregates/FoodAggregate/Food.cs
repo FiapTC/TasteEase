@@ -11,7 +11,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
 
         public string? Name => Props.Name;
         public string? Description => Props.Description;
-        public double Price => Props.Price;
+        public decimal Price => Props.Price;
         public FoodType Type => Props.Type;
         public DateTime? CreatedAt => Props.CreatedAt;
         public DateTime? UpdatedAt => Props.UpdatedAt;
@@ -71,7 +71,7 @@ namespace Fiap.TasteEase.Domain.Aggregates.FoodAggregate
 public record FoodProps(
     string Name,
     string Description,
-    double Price,
+    decimal Price,
     FoodType Type,
     DateTime CreatedAt,
     DateTime UpdatedAt
@@ -80,6 +80,6 @@ public record FoodProps(
 public record CreateFoodProps(
     string Name,
     string Description,
-    double Price,
+    decimal Price,
     FoodType Type
 );

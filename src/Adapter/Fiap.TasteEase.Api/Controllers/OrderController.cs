@@ -25,7 +25,7 @@ namespace Fiap.TasteEase.Api.Controllers
         }
 
         [HttpPost()]
-        public async Task<ActionResult<ResponseViewModel<string>>> Create([FromBody] OrderRequest request)
+        public async Task<ActionResult<ResponseViewModel<CreateOrderResponse>>> Create([FromBody] OrderRequest request)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace Fiap.TasteEase.Api.Controllers
                 if (response.IsFailed)
                 {
                     return StatusCode((int)StatusCodes.Status400BadRequest, 
-                        new ResponseViewModel<string>
+                        new ResponseViewModel<CreateOrderResponse>
                         {
                             Error = true,
                             ErrorMessages = response.Errors.Select(x => x.Message),
@@ -45,16 +45,16 @@ namespace Fiap.TasteEase.Api.Controllers
                 }
 
                 return StatusCode((int)StatusCodes.Status201Created, 
-                    new ResponseViewModel<string>
+                    new ResponseViewModel<CreateOrderResponse>
                     {
-                        Data = response.ValueOrDefault
+                        Data = response.ValueOrDefault.Adapt<CreateOrderResponse>()
                     }
                 );
             }
             catch (Exception ex)
             {
                 return StatusCode((int)StatusCodes.Status500InternalServerError, 
-                    new ResponseViewModel<string>
+                    new ResponseViewModel<CreateOrderResponse>
                     {
                         Error = true,
                         ErrorMessages = new List<string> { ex.Message },

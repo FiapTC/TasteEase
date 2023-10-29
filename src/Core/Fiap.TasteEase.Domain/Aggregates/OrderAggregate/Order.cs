@@ -32,7 +32,7 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
             date
         );
         
-        var order = new Order(orderProps);
+        var order = new Order(orderProps, new OrderId(Guid.NewGuid()));
         return Result.Ok(order);
     }
 
@@ -103,6 +103,15 @@ public class Order : Entity<OrderId, OrderProps>, IOrderAggregate
         };
 
         return Result.Ok(this);
+    }
+    
+    
+    public Result<decimal> GetTotalPrice(List<Food> foods)
+    {
+        if (!foods.Any()) Result.Fail("não foi possível calcular o valor");
+        
+        var total = Props.Foods.Sum(s => (decimal)s.Quantity * (foods.FirstOrDefault(f => f.Id.Value == s.FoodId)?.Price ?? 0M));
+        return Result.Ok(total);
     }
 
     public Result<Order> UpdateStatus(OrderStatus newStatus)
