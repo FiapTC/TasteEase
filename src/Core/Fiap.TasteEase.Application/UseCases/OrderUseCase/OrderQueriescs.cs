@@ -5,7 +5,11 @@ using MediatR;
 
 namespace Fiap.TasteEase.Application.UseCases.OrderUseCase
 {
-    public class GetAll : IRequest<Result<IEnumerable<OrderResponseDto>>> { }
+    public class GetAll : IRequest<Result<IEnumerable<OrderResponseDto>>>
+    {
+        public Guid? ClientId { get; init; }
+        public OrderStatus? Status { get; init; }
+    }
 
     public record OrderResponseDto(
         Guid Id,

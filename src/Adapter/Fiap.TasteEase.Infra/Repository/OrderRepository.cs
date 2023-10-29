@@ -24,4 +24,21 @@ public class OrderRepository
             Order.Rehydrate(model).ValueOrDefault);
         return Result.Ok(aggregates);
     }
+    
+    public async Task<Result<IEnumerable<Order>>> GetByFilters(OrderStatus? status, Guid? clientId)
+    {
+        var query = DbSet.AsNoTracking()
+            .Include(i => i.Client)
+            .Include(i => i.Foods)
+            .ThenInclude(i => i.Food)
+            .Where(w => true);
+
+        if (status is not null) query = query.Where(w => w.Status == (OrderStatus)status);
+        if (clientId is not null) query = query.Where(w => w.ClientId == clientId);
+
+        var models = await query.OrderByDescending(o => o.CreatedAt).ToListAsync();
+        var aggregates = models.Select(model => 
+            Order.Rehydrate(model).ValueOrDefault);
+        return Result.Ok(aggregates);
+    }
 }

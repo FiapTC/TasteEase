@@ -1,6 +1,7 @@
 using Fiap.TasteEase.Api.ViewModels;
 using Fiap.TasteEase.Api.ViewModels.Order;
 using Fiap.TasteEase.Application.UseCases.OrderUseCase;
+using Fiap.TasteEase.Domain.Aggregates.OrderAggregate.ValueObjects;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -64,11 +65,11 @@ namespace Fiap.TasteEase.Api.Controllers
         }
         
         [HttpGet()]
-        public async Task<ActionResult<ResponseViewModel<IEnumerable<OrderResponse>>>> GetAll()
+        public async Task<ActionResult<ResponseViewModel<IEnumerable<OrderResponse>>>> GetAll([FromQuery] int? status, Guid? clientId)
         {
             try
             {
-                var response = await _mediator.Send(new GetAll());
+                var response = await _mediator.Send(new GetAll { ClientId = clientId, Status = (OrderStatus?)status});
 
                 if (response.IsFailed)
                 {
