@@ -31,7 +31,7 @@ namespace Fiap.TasteEase.Api.Controllers
             {
                 var command = request.Adapt<Create>();
 
-                var response = await _mediator.Send(new Create());
+                var response = await _mediator.Send(command);
 
                 if (response.IsFailed)
                 {
