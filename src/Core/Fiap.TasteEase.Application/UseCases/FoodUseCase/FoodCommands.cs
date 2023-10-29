@@ -1,4 +1,5 @@
-﻿using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
+﻿using Fiap.TasteEase.Domain.Aggregates.FoodAggregate;
+using Fiap.TasteEase.Domain.Aggregates.FoodAggregate.ValueObjects;
 using FluentResults;
 using MediatR;
 
@@ -24,5 +25,5 @@ namespace Fiap.TasteEase.Application.UseCases.FoodUseCase
     public class Delete : IRequest<Result<string>>
     {
         public Guid Id { get; set; }
-    }
+    }       
 }
