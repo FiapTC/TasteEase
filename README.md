@@ -12,6 +12,16 @@
  docker compose up -d
 ```
 
+## Acesso PGAdmin
+
+- <http://localhost:82>
+- User: <taste@tasteease.com>
+- Password: @123456
+- Adicionar o servidor utilizando o host com o nome do container:
+  - tasteease-postgresql
+  - usuario: postgres
+  - senha: postgres
+
 ## Para utilização da collection no insomnia
 
 - Faça a importação do arquivo:
