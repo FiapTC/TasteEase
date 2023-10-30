@@ -36,10 +36,10 @@
 
 Authored by:
 
-[Carlos Roberto Nascimento Junior](https://github.com/carona-jr)
+RM352294 - [Carlos Roberto Nascimento Junior](https://github.com/carona-jr)
 
-[André Ribeiro](https://github.com/AndreRibeir0)
+RM351359 - [André Ribeiro](https://github.com/AndreRibeir0)
 
 Apoio
 
-[José Ivan Ribeiro de Oliveira](https://github.com/estrng)
+RM352094 - [José Ivan Ribeiro de Oliveira](https://github.com/estrng)
