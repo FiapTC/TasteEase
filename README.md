@@ -49,6 +49,4 @@ RM352294 - [Carlos Roberto Nascimento Junior](https://github.com/carona-jr)
 
 RM351359 - [André Ribeiro](https://github.com/AndreRibeir0)
 
-Apoio
-
 RM352094 - [José Ivan Ribeiro de Oliveira](https://github.com/estrng)
