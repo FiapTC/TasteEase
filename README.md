@@ -2,7 +2,7 @@
 
 ## Miro DDD
 
-- [Taste Ease Análise DDD](https://miro.com/app/board/uXjVMm2nBP0=/?share_link_id=573849043414 )
+- [Taste Ease Análise DDD](https://miro.com/app/board/uXjVMm2nBP0=/?share_link_id=573849043414)
 
 ## Para construir a image
 
@@ -23,8 +23,12 @@ No diretório raiz do projeto, execute o comando:
 ## Acesso PGAdmin
 
 - <http://localhost:82>
-- User: <taste@tasteease.com>
-- Password: @123456
+- Password: @12345
+
+  ![Imgur](https://i.imgur.com/OKXKlVE.jpg)
+
+  ![Imgur](https://i.imgur.com/cYMmDpv.jpg)
+
 - Adicionar o servidor utilizando o host com o nome do container:
   - tasteease-postgresql
   - usuario: postgres
