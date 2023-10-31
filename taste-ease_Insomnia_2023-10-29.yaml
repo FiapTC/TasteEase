@@ -1,6 +1,6 @@
 _type: export
 __export_format: 4
-__export_date: 2023-10-30T00:18:32.844Z
+__export_date: 2023-10-31T00:43:43.716Z
 __export_source: insomnia.desktop.app:v2023.5.8
 resources:
   - _id: req_93fb7d1e293e4a0498041f0eeae40742
@@ -217,7 +217,7 @@ resources:
     _type: request
   - _id: req_8cb06c09176b45a897017271e60153e9
     parentId: fld_db33bc2312284b22be7ad549355276c2
-    modified: 1698624962472
+    modified: 1698625428567
     created: 1698594396809
     url: http://localhost:5212/order
     name: get by filter
@@ -232,7 +232,7 @@ resources:
         disabled: true
       - id: pair_8a6c2f706b6046e6b37e702c97f3d5ac
         name: clientId
-        value: 3e905b59-92f0-4a12-a053-573566760764
+        value: cbf8b136-2c88-483e-8096-8b93e88ec0f8
         description: ""
         disabled: true
       - id: pair_ffe050cc02e24720bedc3ff71d31a192
@@ -267,9 +267,9 @@ resources:
     _type: request_group
   - _id: req_6147a08240c84ad283db100089cc6068
     parentId: fld_db33bc2312284b22be7ad549355276c2
-    modified: 1698624972183
+    modified: 1698625437832
     created: 1698603081523
-    url: http://localhost:5212/order/3e905b59-92f0-4a12-a053-573566760764
+    url: http://localhost:5212/order/cbf8b136-2c88-483e-8096-8b93e88ec0f8
     name: get by id
     description: ""
     method: GET
@@ -300,9 +300,9 @@ resources:
     _type: request
   - _id: req_b04a5bcf86334af18d816eeaf8d19c6e
     parentId: fld_db33bc2312284b22be7ad549355276c2
-    modified: 1698624987738
+    modified: 1698712978325
     created: 1698605322889
-    url: "{{ _.base_url }}/order/3e905b59-92f0-4a12-a053-573566760764/status"
+    url: http://localhost:5212/order/cbf8b136-2c88-483e-8096-8b93e88ec0f8/status
     name: update status
     description: ""
     method: POST
@@ -320,7 +320,7 @@ resources:
         disabled: true
       - id: pair_8a6c2f706b6046e6b37e702c97f3d5ac
         name: clientId
-        value: ab77fe53-98e1-4eb6-be0d-28c385a573ed
+        value: cbf8b136-2c88-483e-8096-8b93e88ec0f8
         description: ""
         disabled: true
     headers:
@@ -340,9 +340,9 @@ resources:
     _type: request
   - _id: req_550d9d56a1bf4f029cddd2673c7e5e49
     parentId: fld_db33bc2312284b22be7ad549355276c2
-    modified: 1698625015885
+    modified: 1698625469794
     created: 1698613234116
-    url: http://localhost:5212/order/3e905b59-92f0-4a12-a053-573566760764/pay
+    url: http://localhost:5212/order/cbf8b136-2c88-483e-8096-8b93e88ec0f8/pay
     name: pay
     description: ""
     method: POST
@@ -395,7 +395,7 @@ resources:
     _type: request
   - _id: req_cc849d89931741798a5749a7bd6f8b81
     parentId: fld_db33bc2312284b22be7ad549355276c2
-    modified: 1698625061055
+    modified: 1698625408144
     created: 1698512931698
     url: http://localhost:5212/order
     name: create
@@ -406,10 +406,10 @@ resources:
       text: |-
         {
           "description": "Novo pedido",
-          "clientId": "e7536e1c-4366-43e7-9d7c-6260b36b9087",
+          "clientId": "e5e8c57f-75ce-4238-84ec-4313b0b8b7db",
         	"foods": [
         		{
-        			"foodId": "852f1e91-e09c-4309-b696-0f0ed5855bf0",
+        			"foodId": "13e6658b-2211-4af9-a487-ab096365c9b9",
         			"quantity": 3
         		}
         	]
