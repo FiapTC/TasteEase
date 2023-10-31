@@ -2,7 +2,7 @@
 
 ## Miro DDD
 
-- [Taste Ease Análise DDD](https://miro.com/app/board/uXjVMm2nBP0=/)
+- [Taste Ease Análise DDD](https://miro.com/app/board/uXjVMm2nBP0=/?share_link_id=573849043414 )
 
 ## Para construir a image
 
