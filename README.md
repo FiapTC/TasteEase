@@ -1,12 +1,20 @@
 # Taste Ease S/A
 
+## Miro DDD
+
+- [Taste Ease Análise DDD](https://miro.com/app/board/uXjVMm2nBP0=/)
+
 ## Para construir a image
+
+No diretório raiz do projeto, execute o comando:
 
 ```bash
  docker build -t tasteease/tasteease .
 ```
 
 ## Para subir infra do projeto
+
+No diretório raiz do projeto, execute o comando:
 
 ```bash
  docker compose up -d
@@ -30,7 +38,8 @@
 
 ## SEED
 
-[] todo
+Após acessar o PgAdmin, execute o script `seed.sql` para popular o banco de dados.
+No local de execução de scripts do PgAdmin, copie e cole o conteudo do arquivo `seed.sql` e execute.
 
 ## Contribuição
 
