@@ -45,6 +45,24 @@ No diretório raiz do projeto, execute o comando:
 Após acessar o PgAdmin, execute o script `seed.sql` para popular o banco de dados.
 No local de execução de scripts do PgAdmin, copie e cole o conteudo do arquivo `seed.sql` e execute.
 
+## Kubernetes
+
+```bash
+
+# Inicia o cluster
+minikube start
+
+#pods
+kubectl apply -f pods/pod-tasteease-api.yaml
+kubectl apply -f pods/pod-tasteease-db.yaml
+
+#services
+kubectl apply -f services/svc-tasteease-api.yaml
+kubectl apply -f services/svc-tasteease-pgadmin.yaml
+kubectl apply -f services/svc-tasteease-postgres.yaml
+
+```
+
 ## Contribuição
 
 Authored by:
