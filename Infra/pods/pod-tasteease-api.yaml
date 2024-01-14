@@ -15,11 +15,7 @@ spec:
         - containerPort: 5212
       env:
         - name: ASPNETCORE_ENVIRONMENT
-          valueFrom:
-            #aqui pode ser secratMapRef ou configMapRef\
-            configMapRef:
-              name: env-configmap
-              key: ASPNET_ENVIRONMENT
+          value: "Development"
       resources:
         limits:
           cpu: "1"
