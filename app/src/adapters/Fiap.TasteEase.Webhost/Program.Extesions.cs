@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Mapster;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Fiap.TasteEase.Api;
 

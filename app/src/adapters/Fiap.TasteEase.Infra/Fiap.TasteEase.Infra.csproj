@@ -22,11 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Fiap.TasteEase.Application\Fiap.TasteEase.Application.csproj" />
-    <ProjectReference Include="..\..\Core\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
+    <ProjectReference Include="..\..\core\Fiap.TasteEase.Application\Fiap.TasteEase.Application.csproj" />
+    <ProjectReference Include="..\..\core\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
   </ItemGroup>
-
-
-
-
 </Project>

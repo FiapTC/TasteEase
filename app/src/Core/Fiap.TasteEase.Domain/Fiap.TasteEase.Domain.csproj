@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Class1.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.15.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>

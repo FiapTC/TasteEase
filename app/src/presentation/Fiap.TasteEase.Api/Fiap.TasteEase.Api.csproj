@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>811de9f7-534a-4805-8b7b-f3b01717d0ea</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,11 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Fiap.TasteEase.Domain\Fiap.TasteEase.Domain.csproj" />
-    <ProjectReference Include="..\Fiap.TasteEase.Infra\Fiap.TasteEase.Infra.csproj" />
+    <ProjectReference Include="..\..\core\Fiap.TasteEase.Application\Fiap.TasteEase.Application.csproj" />
   </ItemGroup>
-
-
-
-
 </Project>
