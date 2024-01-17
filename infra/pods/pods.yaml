@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: tasteease-database-pod
+  namespace: tasteease
   labels:
     app: tasteease-database-pod
 spec:
@@ -42,17 +43,15 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: tasteease-api-pod
+  namespace: tasteease
   labels:
     app: tasteease-api-pod
 spec:
   containers:
     - name: tasteease-api
-      image: estrng/tasteease:0.0.3
-      #env:
-      #- name: ASPNETCORE_ENVIRONMENT
-      #value: "Development"
+      image: estrng/tasteease:0.0.14
       ports:
-        - containerPort: 5212
+        - containerPort: 80
       env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Development"

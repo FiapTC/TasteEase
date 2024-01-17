@@ -14,9 +14,12 @@ namespace Fiap.TasteEase.Infra
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
+                Console.WriteLine($"Using {configuration.GetConnectionString("DefaultConnection")} connection string");
                 options
-                    .UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
-                        builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery));
+                    .UseNpgsql(
+                        "Host=tasteease-database-service.tasteease.svc.cluster.local;Port=80;Database=taste-ease;Username=tasteease;Password=tasteease",
+                        builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)
+                    );
             });
 
             services.AddScoped<IApplicationDbContext, ApplicationDbContextAdapter>();
