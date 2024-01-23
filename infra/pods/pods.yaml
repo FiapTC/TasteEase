@@ -55,6 +55,8 @@ spec:
       env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Development"
+        - name: SECRETS_PATH
+          value: /app/secrets/
       resources:
         limits:
           cpu: "1"
@@ -62,3 +64,11 @@ spec:
         requests:
           cpu: "0.5"
           memory: "256Mi"
+      volumeMounts:
+          - mountPath: /app/secrets/appsettings.json
+            name: secrets
+            subPath: appsettings.json
+  volumes:
+    - name: secrets
+      configMap: 
+          name: appsettings-taste-ease
