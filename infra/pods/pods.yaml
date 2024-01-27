@@ -21,23 +21,7 @@ spec:
       resources:
         limits:
           cpu: "100m"
-          memory: "128Mi"
-
-    - name: tasteease-pgadmin
-      image: dpage/pgadmin4:latest
-      env:
-        - name: PGADMIN_DEFAULT_EMAIL
-          value: "taste@tasteease.com"
-        - name: PGADMIN_DEFAULT_PASSWORD
-          value: "@123456"
-        - name: PGADMIN_CONFIG_SERVER_MODE
-          value: "False"
-      ports:
-        - containerPort: 80
-      resources:
-        limits:
-          cpu: "100m"
-          memory: "128Mi"
+          memory: "256Mi"
 ---
 apiVersion: v1
 kind: Pod

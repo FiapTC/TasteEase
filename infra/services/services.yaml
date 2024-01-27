@@ -16,23 +16,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tasteease-pgadmin-service
-  namespace: tasteease
-  labels:
-    app: tasteease-pgadmin-service
-spec:
-  type: NodePort
-  ports:
-    - port: 80
-      name: pgadmin-s-p
-      targetPort: 80
-      nodePort: 30003
-  selector:
-    app: tasteease-database-pod
----
-apiVersion: v1
-kind: Service
-metadata:
   name: tasteease-api-service
   namespace: tasteease
   labels:
