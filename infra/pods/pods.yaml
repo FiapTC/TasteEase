@@ -49,7 +49,7 @@ metadata:
 spec:
   containers:
     - name: tasteease-api
-      image: estrng/tasteease:0.0.14
+      image: estrng/tasteease:0.0.16
       ports:
         - containerPort: 80
       env:
@@ -65,10 +65,10 @@ spec:
           cpu: "0.5"
           memory: "256Mi"
       volumeMounts:
-          - mountPath: /app/secrets/appsettings.json
-            name: secrets
-            subPath: appsettings.json
+        - name: secrets
+          mountPath: /app/secrets/appsettings.json
+          subPath: appsettings.json
   volumes:
     - name: secrets
-      configMap: 
-          name: appsettings-taste-ease
+      configMap:
+        name: appsettings-taste-ease
