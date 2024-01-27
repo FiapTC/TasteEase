@@ -20,8 +20,8 @@ spec:
         - containerPort: 5432
       resources:
         limits:
-          cpu: "500m"
-          memory: "512Mi"
+          cpu: "100m"
+          memory: "128Mi"
 
     - name: tasteease-pgadmin
       image: dpage/pgadmin4:latest
@@ -36,8 +36,8 @@ spec:
         - containerPort: 80
       resources:
         limits:
-          cpu: "500m"
-          memory: "512Mi"
+          cpu: "100m"
+          memory: "128Mi"
 ---
 apiVersion: v1
 kind: Pod
@@ -60,7 +60,7 @@ spec:
       resources:
         limits:
           cpu: "1"
-          memory: "512Mi"
+          memory: "256Mi"
         requests:
           cpu: "0.5"
           memory: "256Mi"
