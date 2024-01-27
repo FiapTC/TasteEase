@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: appsettings-taste-ease
   namespace: tasteease
+  labels:
+    app: appsettings-taste-ease
 data:
   appsettings.json: |-
     {
