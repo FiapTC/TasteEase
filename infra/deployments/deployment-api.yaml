@@ -6,7 +6,7 @@ metadata:
   labels:
     app: tasteease-api-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: tasteease-api-pod

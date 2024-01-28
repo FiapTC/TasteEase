@@ -1,7 +1,7 @@
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpa-api
+  name: tasteease-hpa-api
   namespace: tasteease
 spec:
   scaleTargetRef:
@@ -9,11 +9,11 @@ spec:
     kind: Deployment
     name: tasteease-api-deployment
   minReplicas: 1
-  maxReplicas: 3
+  maxReplicas: 5
   metrics:
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 80
+          averageUtilization: 20

@@ -28,20 +28,11 @@ spec:
           resources:
             limits:
               cpu: "100m"
-              memory: "100Mi"
-
-        - name: tasteease-pgadmin
-          image: dpage/pgadmin4:latest
-          ports:
-            - containerPort: 80
-          env:
-            - name: PGADMIN_DEFAULT_EMAIL
-              value: "taste@tasteease.com"
-            - name: PGADMIN_DEFAULT_PASSWORD
-              value: "@123456"
-            - name: PGADMIN_CONFIG_SERVER_MODE
-              value: "False"
-          resources:
-            limits:
-              cpu: "500m"
-              memory: "100Mi"
+              memory: "256Mi"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: tasteease-postgres-pv-claim
+      volumes:
+        - name: tasteease-postgres-pv-claim
+          persistentVolumeClaim:
+            claimName: tasteease-postgres-pv-claim
