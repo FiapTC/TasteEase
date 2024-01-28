@@ -16,8 +16,7 @@ namespace Fiap.TasteEase.Infra
             {
                 Console.WriteLine($"Using {configuration.GetConnectionString("DefaultConnection")} connection string");
                 options
-                    .UseNpgsql(
-                        configuration.GetConnectionString("DefaultConnection"),
+                    .UseNpgsql("Host=localhost;Port=5432;Database=taste-ease;Username=postgres;Password=1234",
                         builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)
                     );
             });
