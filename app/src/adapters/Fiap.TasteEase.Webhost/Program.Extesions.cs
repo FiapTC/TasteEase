@@ -3,7 +3,7 @@ using System.Reflection;
 using Mapster;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Fiap.TasteEase.Webhost;
+namespace Fiap.TasteEase.Api;
 
 public static class Program
 {
